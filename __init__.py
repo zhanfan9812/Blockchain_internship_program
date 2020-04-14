@@ -1,7 +1,6 @@
 from flask import Flask
-from .extension import db
-from .views.user import user_page
-
+from Blockchain_internship_program.extension import db
+from Blockchain_internship_program.views.user import user_page
 
 app = Flask('Blockchain_internship_program')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:QQ19981212@127.0.0.1/python'
@@ -13,4 +12,5 @@ db.init_app(app)
 
 app.register_blueprint(user_page)
 
-
+#set FLASK_APP=__init__.py
+#set FLASK_ENV=development

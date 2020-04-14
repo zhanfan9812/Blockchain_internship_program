@@ -24,8 +24,8 @@
 <script>
     $(function(){
         $('#submit').click(function(){
-            var name = $('name').val();
-            var password = $('password').val();
+            var name = $('#name').val();
+            var password = $('#password').val();
 
             $.ajax({
                 url:'/login',
@@ -34,7 +34,7 @@
                 success:function(response){
                     if(response=='1'){
                         alert('登录成功');
-                        window.location.hre='/users';
+                        window.location.href='/users';
                     }else{
                         alert('登录失败');
                     }

@@ -7,8 +7,7 @@ user_page = Blueprint('user_page', __name__)
 @user_page.route('/users')
 def users():
     if session.get('user_id'):
-        users = User.query.all()
-        return render_template('user/index.html', users=users)
+        return render_template('user/index.html')
     else:
         return redirect('/')
 
@@ -21,17 +20,19 @@ def login():
         return render_template('user/login.html')
     else:
         print('post_arrive')
-        name = request.form.get('name')
+        name = request.form.get('username')
         pwd = request.form.get('password')
 
         user = User.query.filter(User.username == name).first()
-        print('pwd:',pwd)
+        print('name:',name,'pwd:',pwd)
+        print(user)
         # print('user.password:', user.password)
         if user and user.password == pwd:
             session['user_id'] = user.id
+            # print('登录成功')
             # return redirect(url_for('user_page.users'))
             return '1'
         else:
-            # flash('登陆失败')
             return '0'
+            # print('登录失败')
             # return render_template('user/login.html')

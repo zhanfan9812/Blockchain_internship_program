@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>后台管理</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/lib/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../static/css/admin.css" media="all">
+	</head>
+	<body>
+        <div class="layui-fluid">
+			<div class="layui-col-md12">
+				<div class="layui-navs">
+					<span class="layui-breadcrumb" lay-separator="—">
+						<a href="javascript:;">系统设置</a>
+						<a href="javascript:;">其他设置</a>
+						<a><cite>附件列表</cite></a>
+					</span>
+					<a class="layui-btn layui-btn-small" style="line-height:1.6em;float:right;height: 36px;" href="javascript:location.replace(location.href);" title="刷新">
+						<i class="layui-icon layui-icon-refresh" style="line-height:36px;font-size: 16px;"></i>
+					</a>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-body">
+						<table class="layui-table layui-form">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>ID</th>
+									<th>附件名称</th>
+									<th>附件图片</th>
+									<th>附件类型</th>
+									<th>上传时间</th>
+									<th>管理</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td>图片</td>
+									<td><img src="images/logins.png" style="width: 100px;height: 60px;border-radius: 5px;"></td>
+									<td><button class="layui-btn layui-btn-sm layui-btn-sm layui-bg-blue">图片</button></td>
+									<td>2020-3-30</td>
+									<td>
+										<a class="layui-btn layui-btn-sm layui-btn-normal" title="查看" onclick="watch_images('1')" href="javascript:;"><i class="layui-icon layui-icon-search"></i>查看</a>
+										<a class="layui-btn layui-btn-sm layui-btn-warm copy" title="复制" href="javascript:;" data-clipboard-text="url"><i class="layui-icon layui-icon-link"></i>复制</a>
+										<a class="layui-btn layui-btn-sm layui-btn-danger" title="删除" onclick="execute_del(this, 1, 'url')" href="javascript:;"><i class="layui-icon layui-icon-delete"></i>删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td>视频</td>
+									<td><img src="images/logins.png" style="width: 100px;height: 60px;border-radius: 5px;"></td>
+									<td><button class="layui-btn layui-btn-sm layui-btn-sm layui-bg-orange">视频</button></td>
+									<td>2020-3-30</td>
+									<td>
+										<a class="layui-btn layui-btn-sm layui-btn-normal" title="查看" onclick="watch_video('1')" href="javascript:;"><i class="layui-icon layui-icon-search"></i>查看</a>
+										<a class="layui-btn layui-btn-sm layui-btn-warm copy" title="复制" href="javascript:;" data-clipboard-text="url"><i class="layui-icon layui-icon-link"></i>复制</a>
+										<a class="layui-btn layui-btn-sm layui-btn-danger" title="删除" onclick="execute_del(this, 1, 'url')" href="javascript:;"><i class="layui-icon layui-icon-delete"></i>删除</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="watch_images" class="hide" style="width: 670px; height: 320px;">
+					  <a href="javascript:;" target="_blank">
+						<img src="images/logins.png" style="max-width: 100%;">
+					  </a>
+					</div>
+					<div id="watch_video" class="hide" style="width: 670px; height: 320px;">
+					  <a href="javascript:;" target="_blank">
+						<video width="670" height="320" controls>
+							<source src="https://www.runoob.com/try/demo_source/movie.mp4"  type="video/mp4">
+							<source src="https://www.runoob.com/try/demo_source/movie.mp4"  type="video/ogg">
+						</video>
+					  </a>
+					</div>
+					<div class="page" style="text-align: center">
+						<ul class="pagination">
+							<li class="disabled"><span>上一页</span></li> 
+							<li class="active"><span>1</span></li>
+							<li><a href="javascript:;">2</a></li>
+							<li><a href="javascript:;">3</a></li>
+							<li><a href="javascript:;">4</a></li> 
+							<li><a href="javascript:;">下一页</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>	
+    </body>
+</html>
+<script src="../../static/js/jquery-3.4.1.min.js"></script>
+<script src="../../static/lib/layui/layui.js"></script>
+<script src="../../static/js/admin.js"></script>
+<script src="../../static/js/clipboard.min.js"></script>
+<script>
+    /**复制路径**/
+    var clipboard = new ClipboardJS(".copy");
+    clipboard.on("success", function(e) {
+        layer.msg("复制成功",{icon:1,time:1000});
+    });
+    clipboard.on("error", function(e) {
+        layer.msg("复制失败",{icon:1,time:1000});
+    });
+
+    /**查看图片**/
+    function watch_images(id) {
+        layer.open({
+			type: 1,
+			title: false,
+			closeBtn: 0,
+			area: ['auto'],
+			skin: 'layui-layer-nobg', //没有背景色
+			shadeClose: true,
+			content: $('#watch_images')
+		});
+    }
+	
+	/**查看视频**/
+    function watch_video(id) {
+        layer.open({
+			type: 1,
+			title: false,
+			closeBtn: 0,
+			area: ['auto'],
+			skin: 'layui-layer-nobg', //没有背景色
+			shadeClose: true,
+			content: $('#watch_video')
+		});
+    }
+</script>

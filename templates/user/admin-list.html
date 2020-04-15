@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>后台管理</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/lib/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../static/css/admin.css" media="all">
+	</head>
+	<body>
+        <div class="layui-fluid">
+			<div class="layui-col-md12">
+				<div class="layui-navs">
+					<span class="layui-breadcrumb" lay-separator="—">
+						<a href="javascript:;">系统设置</a>
+						<a href="javascript:;">管理员设置</a>
+						<a><cite>管理员列表</cite></a>
+					</span>
+					<a class="layui-btn layui-btn-small" style="line-height:1.6em;float:right;height: 36px;" href="javascript:location.replace(location.href);" title="刷新">
+						<i class="layui-icon layui-icon-refresh" style="line-height:36px;font-size: 16px;"></i>
+					</a>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-body ">
+						<form class="layui-form layui-col-space5">
+							<div class="layui-inline layui-show-xs-block">
+								<select name="system_role_id" lay-filter="system_role_id">
+									<option value="0">请选择角色</option>
+									<option value="1">系统管理员</option>
+									<option value="1">文章管理员</option>
+								</select>
+							</div>
+							<div class="layui-inline layui-show-xs-block">
+								<input type="text" name="start_time" id="start_time" value="" placeholder="请选择开始时间" autocomplete="off" class="layui-input">
+							</div>
+							<div class="layui-inline layui-show-xs-block">
+								<input type="text" name="end_time" id="end_time" value="" placeholder="请选择结束时间" autocomplete="off" class="layui-input">
+							</div>
+							<div class="layui-inline layui-show-xs-block">
+								<input type="text" name="name" value=""  placeholder="请输入ID、名称、账号" autocomplete="off" class="layui-input">
+							</div>
+							<div class="layui-inline layui-show-xs-block">
+								<button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+							</div>
+						</form>
+					</div>
+					<div class="layui-card-header">
+						<button class="layui-btn" onclick="execute_open('添加管理员', 'admin_operation.html', '1000', '700')"><i class="layui-icon"></i>添加管理员</button>
+					</div>
+					<div class="layui-card-body">
+						<table class="layui-table layui-form">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>ID</th>
+									<th>管理员头像</th>
+									<th>管理员名称</th>
+									<th>管理员电话</th>
+									<th>管理员账号</th>
+									<th>管理员角色</th>
+									<th>状态</th>
+									<th>管理</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td><img src="images/logins.png" style="width: 50px;height: 50px;border-radius: 50%;"></td>
+									<td>管理员1号</td>
+									<td>18300000000</td>
+									<td>admin</td>	
+									<td>超级管理员</td>
+									<td><input type="checkbox" name="switch" lay-skin="switch" data-url="" value="1" data-id="1" title="状态" lay-text="启用|禁用" checked="checked"></td>
+									<td>
+										<a class="layui-btn layui-btn-sm layui-btn-normal" title="编辑" onclick="execute_open('编辑管理员', 'admin_operation.html?id=1', 1000, 700)" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+										<a class="layui-btn layui-btn-sm layui-btn-danger" title="删除" onclick="execute_del(this, 1, '')" href="javascript:;"><i class="layui-icon layui-icon-delete"></i>删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td><img src="images/logins.png" style="width: 50px;height: 50px;border-radius: 50%;"></td>
+									<td>管理员1号</td>
+									<td>18300000000</td>
+									<td>admin</td>	
+									<td>超级管理员</td>
+									<td><input type="checkbox" name="switch" lay-skin="switch" data-url="" value="1" data-id="1" title="状态" lay-text="启用|禁用" checked="checked"></td>
+									<td>
+										<a class="layui-btn layui-btn-sm layui-btn-normal" title="编辑" onclick="execute_open('编辑管理员', 'admin_operation.html?id=1', 1000, 700)" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+										<a class="layui-btn layui-btn-sm layui-btn-danger" title="删除" onclick="execute_del(this, 1, '')" href="javascript:;"><i class="layui-icon layui-icon-delete"></i>删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td><img src="images/logins.png" style="width: 50px;height: 50px;border-radius: 50%;"></td>
+									<td>管理员1号</td>
+									<td>18300000000</td>
+									<td>admin</td>	
+									<td>超级管理员</td>
+									<td><input type="checkbox" name="switch" lay-skin="switch" data-url="" value="1" data-id="1" title="状态" lay-text="启用|禁用" checked="checked"></td>
+									<td>
+										<a class="layui-btn layui-btn-sm layui-btn-normal" title="编辑" onclick="execute_open('编辑管理员', 'admin_operation.html?id=1', 1000, 700)" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+										<a class="layui-btn layui-btn-sm layui-btn-danger" title="删除" onclick="execute_del(this, 1, '')" href="javascript:;"><i class="layui-icon layui-icon-delete"></i>删除</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="page" style="text-align: center">
+						<ul class="pagination">
+							<li class="disabled"><span>上一页</span></li> 
+							<li class="active"><span>1</span></li>
+							<li><a href="javascript:;">2</a></li>
+							<li><a href="javascript:;">3</a></li>
+							<li><a href="javascript:;">4</a></li> 
+							<li><a href="javascript:;">下一页</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+        </div>
+    </body>
+</html>
+<script src="../../static/js/jquery-3.4.1.min.js"></script>
+<script src="../../static/lib/layui/layui.js"></script>
+<script src="../../static/js/admin.js"></script>

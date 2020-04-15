@@ -17,7 +17,7 @@ class User(db.Model):
         self.role = role
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User username:%r>' % self.username
 
 class Product(db.Model):
     __tablename__ = 'products'
@@ -36,10 +36,24 @@ class Product(db.Model):
         self.date_of_pro = date_of_pro
 
     def __repr__(self):
-        return '<User %r>' % self.product_name
+        return '<Product product_name:%r>' % self.product_name
 
 
 class Logistic(db.Model):
     __tablename__ = 'logistics'
 
     id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String(80), nullable=False)  #0:生产中 1:待运输 2：运输中 3：已到达 4：已入库
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    random_num = db.Column(db.Integer, unique=False)
+    current_hash = db.Column(db.String(200), unique=False)
+    pre_hash = db.Column(db.String(200), unique=False)
+    chain_index = db.Column(db.Integer, unique=False)
+    description = db.Column(db.Text)
+
+    def __init__(self, product_id, status):
+        self.product_id = product_id
+        self.status = status
+
+    def __repr__(self):
+        return '<Logistic id:%r status:%s product_id:%s>' % (self.id, self.status, self.product_id)

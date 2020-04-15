@@ -4,8 +4,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>后台管理</title>
-		<link rel="stylesheet" href="../../static/lib/layui/css/layui.css">
-		<link rel="stylesheet" href="../../static/css/admin.css">
+		<link rel="stylesheet" href="../static/lib/layui/css/layui.css">
+		<link rel="stylesheet" href="../static/css/admin.css">
 	</head>
 	<body class="layui-layout-body">
 		<div class="layui-layout layui-layout-admin">
@@ -15,7 +15,7 @@
 				<!-- 左侧导航栏切换，头部区域（可配合layui已有的水平导航） -->
 				<ul class="layui-nav layui-layout-left" id="checkout">
 					<li id="role_1" class="layui-nav-item" style="display: none" data-nav="1"><a href="javascript:;">生产厂商角色</a></li>
-					<li id="role_2" class="layui-nav-item" style="display: none" data-nav="2"><a id="a_role_2" href="#">物流角色</a></li>
+					<li id="role_2" class="layui-nav-item" style="display: none" data-nav="2"><a href="javascript:;">物流角色</a></li>
 					<li id="role_3" class="layui-nav-item" style="display: none" data-nav="3"><a href="javascript:;">仓库角色</a></li>
 					<li id="role_4" class="layui-nav-item" style="display: none" data-nav="4"><a href="javascript:;">管理员角色</a></li>
 				</ul>
@@ -23,7 +23,7 @@
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item">
 						<a href="javascript:;">
-							<img src="images/logins.png" class="layui-nav-img">lihang<span id="role">2</span>
+							<img src="../static/images/logins.png" class="layui-nav-img">{{username}}<span style="display:none" id="role">{{role}}</span>
 						</a>
 						<dl class="layui-nav-child">
 							<dd><a href="javascript:;">基本资料</a></dd>
@@ -61,7 +61,7 @@
 						<li class="layui-nav-item layui-nav-itemed">
 							<a class="" href="javascript:;">商品管理</a>
 							<dl class="layui-nav-child">
-								<dd><a href="javascript:;" data-url="article_category-list.html">运输中商品</a></dd>
+								<dd><a href="javascript:;" data-url="transporting.html">运输中商品</a></dd>
 								<dd><a href="javascript:;" data-url="commodity-list.html">待运输商品</a></dd>
 							</dl>
 						</li>
@@ -79,9 +79,9 @@
 						<li class="layui-nav-item layui-nav-itemed">
 							<a class="" href="javascript:;">商品管理</a>
 							<dl class="layui-nav-child">
-								<dd><a href="javascript:;" data-url="article_category-list.html">已入库商品</a></dd>
-								<dd><a href="javascript:;" data-url="article-list.html">待入库商品</a></dd>
-								<dd><a href="javascript:;" data-url="article-list.html">已到达商品</a></dd>
+								<dd><a href="javascript:;" data-url="commoditys-inwarehouse.html">已入库商品</a></dd>
+								<dd><a href="javascript:;" data-url="wait-inwarehouse.html">待入库商品</a></dd>
+								<dd><a href="javascript:;" data-url="arrive.html">已到达商品</a></dd>
 							</dl>
 						</li>
 						<li class="layui-nav-item layui-nav-itemed">
@@ -98,9 +98,9 @@
 						<li class="layui-nav-item layui-nav-itemed">
 							<a class="" href="javascript:;">用户管理</a>
 							<dl class="layui-nav-child">
-								<dd><a href="javascript:;" data-url="article_category-list.html">生产厂商</a></dd>
-								<dd><a href="javascript:;" data-url="article-list.html">物流人员</a></dd>
-								<dd><a href="javascript:;" data-url="article-list.html">仓库管理人员</a></dd>
+								<dd><a href="javascript:;" data-url="role-list.html">生产厂商</a></dd>
+								<dd><a href="javascript:;" data-url="role-list.html">物流人员</a></dd>
+								<dd><a href="javascript:;" data-url="role-list.html">仓库管理人员</a></dd>
 							</dl>
 						</li>
 					</ul>
@@ -118,7 +118,7 @@
 		</div>
 	</body>
 </html>
-<script src="../../static/js/jquery-3.4.1.min.js"></script>
-<script src="../../static/js/index.js"></script>
-<script src="../../static/lib/layui/layui.js"></script>
-<script src="../../static/js/admin.js"></script>
+<script src="../static/js/jquery-3.4.1.min.js"></script>
+<script src="../static/js/index.js"></script>
+<script src="../static/lib/layui/layui.js"></script>
+<script src="../static/js/admin.js"></script>

@@ -8,12 +8,16 @@ $(function  () {
             data:{username:username,password:password},
             success:function(response){
                 if(response=='1'){
-                    alert('登录成功');
                     window.location.href='/users';
                 }else{
-                    alert('登录失败');
+                    alert('登录失败,用户名或密码错误!');
                 }
             }
         });
     })
+    $(document).keydown(function (event) {
+        if (event.keyCode == 13) {
+            $('#submit').triggerHandler('click');
+        }
+     });
 })

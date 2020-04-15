@@ -7,7 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    role = db.Column(db.Integer, nullable=False)    #0:管理员 1:生产商 2:物流人员 3:仓库人员
+    role = db.Column(db.Integer, nullable=False)    #1:生产商 2:物流人员 3:仓库人员 4:管理员
     email = db.Column(db.String(120), unique=True)
     gender = db.Column(db.String(120))
 

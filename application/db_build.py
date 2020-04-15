@@ -6,7 +6,7 @@ if __name__ == '__main__':
     with app.app_context():
         db.drop_all()
         db.create_all()
-        admin = User(username='admin1', password='123456', role=1)
+        admin = User(username='admin', password='123456', role=4)
         db.session.add(admin)
         db.session.commit()
     print('表已创建')

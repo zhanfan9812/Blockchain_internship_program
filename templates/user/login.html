@@ -1,0 +1,47 @@
+<html>
+<head>
+    <style>
+        .alert {
+            color: red;
+            text-align: center;
+        }
+    </style>
+    <script src="../../static/jquery-2.1.0.js"></script>
+</head>
+<body>
+<h1>Login</h1>
+     {% for message in get_flashed_messages() %}
+         <div class="alert">{{ message }}</div>
+     {% endfor %}
+    <form action="{{ url_for('user_page.login') }}" method="post">
+        <table>
+            <tr><td>用户名：</td><td><input id="name" type="text" name="name" /></td></tr>
+            <tr><td>密码：</td><td><input id="password" type="password" name="password" /></td>
+
+        </table>
+    </form>
+    <tr><td>&nbsp;</td><td><input id="submit" type="button" name="submit" value="Submit" /></td></tr>
+<script>
+    $(function(){
+        $('#submit').click(function(){
+            var name = $('#name').val();
+            var password = $('#password').val();
+
+            $.ajax({
+                url:'/login',
+                method:'POST',
+                data:{name:name,password:password},
+                success:function(response){
+                    if(response=='1'){
+                        alert('登录成功');
+                        window.location.href='/users';
+                    }else{
+                        alert('登录失败');
+                    }
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>

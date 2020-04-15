@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
-from Blockchain_internship_program.models import User
+from application.models import User
 
 user_page = Blueprint('user_page', __name__)
 

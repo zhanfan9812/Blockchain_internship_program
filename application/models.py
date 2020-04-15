@@ -1,4 +1,4 @@
-from Blockchain_internship_program.extension import db
+from application.extension import db
 
 
 class User(db.Model):

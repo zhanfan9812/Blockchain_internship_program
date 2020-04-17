@@ -11,14 +11,26 @@ def select_username():
     print(name)
     user = User.query.filter(User.username == name).first()
     print(user)
-    data1 = {
-        'username':user.username,
-        'age':'18'
+    data = {
+        'username' : user.username,
+        'id' : user.id,
+        'email': user.email,
+        'gender': user.gender
     }
-    data2 = {
-        'username': 'lili',
-        'age': '18'
-    }
-    data = [data1,data2]
-    return jsonify({"data":data})
+    return jsonify(data)
     # return '{username:lilin}'
+
+@admin_page.route('/select_role',methods=["POST"])
+def select_role():
+    role = request.form.get('role')
+    users = User.query.filter(User.role==role).all()
+    data = []
+    for user in users:
+        user_dict = {
+            'username' : user.username,
+            'id' : user.id,
+            'email': user.email,
+            'gender': user.gender
+        }
+        data.append(user_dict)
+    return jsonify({"data": data})

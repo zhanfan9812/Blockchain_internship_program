@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
+from application.extension import db
 from flask import jsonify
 from application.models import User
 import  json
@@ -8,9 +9,10 @@ admin_page = Blueprint('admin_page', __name__)
 @admin_page.route('/select_username',methods=["POST"])
 def select_username():
     name = request.form.get('username')
-    print(name)
-    user = User.query.filter(User.username == name).first()
-    print(user)
+    role = request.form.get('role')
+    user = User.query.filter(User.username == name,User.role == role).first()
+    if (user == None):
+        return '0'
     data = {
         'username' : user.username,
         'id' : user.id,
@@ -34,3 +36,14 @@ def select_role():
         }
         data.append(user_dict)
     return jsonify({"data": data})
+
+@admin_page.route('/delete_id',methods=["POST"])
+def delete_id():
+    id = request.form.get('id')
+    user = User.query.filter(User.id == id).first()
+    if (user == None):
+        return '1'
+    else:
+        db.session.delete(user)
+        db.session.commit()
+        return '0'

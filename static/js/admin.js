@@ -174,13 +174,13 @@ function execute_del(obj, id, url) {
     layer.confirm('确认要删除吗？', function(index) {
 		layer.load();
         $.ajax({
-            url:''+ url +'',
+            url:'/'+ url +'',
             type:'Post',
             data:{'id':id},
             dataType:'json',
             success:function(data) {
 				layer.closeAll('loading');
-                if (data.code == 0) {
+                if (data == '0') {
                     $(obj).parents("tr").remove();
                     layer.msg(data.message,{icon:1,time:1000});return false;
                 } else {

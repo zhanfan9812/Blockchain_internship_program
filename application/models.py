@@ -24,7 +24,7 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(80), unique=True, nullable=False)
-    status = db.Column(db.String(80), nullable=False) #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
+    status = db.Column(db.Integer, nullable=False) #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
     number = db.Column(db.Integer, nullable=False)
     date_of_pro = db.Column(db.DateTime, nullable=False, default=datetime.now)
     description = db.Column(db.Text)
@@ -42,12 +42,12 @@ class Logistic(db.Model):
     __tablename__ = 'logistics'
 
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(80), nullable=False)  #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
+    status = db.Column(db.Integer, nullable=False)  #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-    random_num = db.Column(db.Integer, unique=False)
-    current_hash = db.Column(db.String(200), unique=False)
-    pre_hash = db.Column(db.String(200), unique=False)
-    chain_index = db.Column(db.Integer, unique=False)
+    random_num = db.Column(db.Integer)
+    current_hash = db.Column(db.String(200))
+    pre_hash = db.Column(db.String(200))
+    chain_index = db.Column(db.Integer)
     description = db.Column(db.Text)
     update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 

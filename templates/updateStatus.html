@@ -8,16 +8,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" href="../static/lib/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../static/css/admin.css" media="all">
-
 	</head>
 	<body>
         <div class="layui-fluid">
 			<div class="layui-col-md12">
-				<form class="layui-form layui-form-pane" action="" id="frm-reg" >
 					<div class="layui-form-item">
 						<label class="layui-form-label">商品状态</label>
 						<div class="layui-input-inline layer-inputs">
-							<select name="pid" id="pid" lay-filter="pid">
+							<select name="pid" id="pid" lay-filter="pid" style="width: 200px;height: 50px">
 								<option value="0" selected="selected">初始状态</option>
 								<option value="1">待运输状态</option>
 								<option value="2">运输中状态</option>
@@ -27,13 +25,11 @@
 						</div>
 						<div class="layui-form-mid layui-word-aux">请选择商品状态</div>
 					</div>
-
 					<div class="layui-form-item" style="margin-left: 50px;">
 						<input type="hidden" name="id" id="id" value="">
 						<input type="hidden" name="request_url" id="request_url" value="">
-						<button class="layui-btn" id="execute" lay-submit="execute" lay-filter="execute"><i class="layui-icon layui-icon-form"></i>保存</button>
+						<button class="layui-btn" id="saveStatus"><i class="layui-icon layui-icon-form"></i>保存</button>
 					</div>
-				</form>
 			</div>
 		</div>	
     </body>

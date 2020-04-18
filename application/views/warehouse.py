@@ -29,3 +29,23 @@ def wareHouseUpdateStatus(status,id):
     db.session.commit()
     return "1"
 
+@warehouse_page.route("/warehouse/searchByCondition/<productId>")
+def searchCommodityByCondition(productId):
+    flag = productId.isdigit()
+    if flag:
+        product = Product.query.get(productId)
+    else:
+        product = Product.query.filter(Product.product_name == productId).first()
+    if  product is None:
+        print("空值")
+        return ""
+    else:
+        product_data = {
+            "id": product.id,
+            "product_name": product.product_name,
+            "status": product.status,
+            "number": product.number,
+            "date_of_pro": product.date_of_pro,
+            "description": product.description
+        }
+        return jsonify({"product":product_data})

@@ -3,7 +3,6 @@ import threading
 import json
 from hashlib import sha256
 import os
-import time
 
 
 _basepath = os.path.abspath(os.path.dirname(__file__))
@@ -31,8 +30,10 @@ class subscriber:
             # Read envelope with address
             [address, contents] = subscriber.recv_multipart()
             # print('subscriber.recv_multipart():',subscriber.recv_multipart())
-            print("[%s] %s" % (address, contents))
+            print("从发布者处收到的信息: [%s] %s" % (address, contents))
             compute_hash(contents)
+            # 接收一次发布者的new_block消息后关闭端口，防止重复接受并计算hash，如果要一直开着此端口，也可以注释掉
+            break;
 
         subscriber.close()
         context.term()
@@ -47,9 +48,10 @@ class subscriber:
         while True:
             # Read envelope with address
             [address, contents] = subscriber.recv_multipart()
-            print("[%s] %s" % (address, contents))
+            print("将要写入文件的信息: [%s] %s" % (address, contents))
             write_blockfile(contents)
             subscriber.close()
+
         context.term()
 
 
@@ -65,7 +67,9 @@ def compute_hash(data):
         block_object['nonce'] +=1
         ee = json.dumps(block_object)
         computed_hash = sha256(ee.encode()).hexdigest()
-        print(computed_hash)
+
+        # print(computed_hash)
+
     print('最终结果是:{}, 随机数:{}'.format(computed_hash, block_object['nonce']))
 
     #send signal of status,FIFO
@@ -82,7 +86,9 @@ def send_finish_status(block_object):
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
     socket.connect("tcp://{}:{}".format(conf["server"], conf["signal_port"]))
-    print('fdsfffffffffffffff===',type(block_object),block_object)
+
+    print('返回给发布者的信息: ',type(block_object),block_object)
+
     block_dict = {}
     block_dict['finished'] = block_object
     block_string = json.dumps(block_dict)
@@ -91,7 +97,7 @@ def send_finish_status(block_object):
 def write_blockfile(data):
     obj_data = json.loads(data.decode(encoding="utf-8"))
     #print('the file ==================',obj_data," and index is ",json.dumps(obj_data,indent=2,ensure_ascii=False))
-    with open(_basepath+'\\block'+str(obj_data['index'])+'.txt', 'w',encoding="utf-8") as f:
+    with open(_basepath+'\\subBlock'+str(obj_data['index'])+'.txt', 'w',encoding="utf-8") as f:
         f.write(json.dumps(obj_data,indent=2,ensure_ascii=False))
 
 if __name__ == '__main__':

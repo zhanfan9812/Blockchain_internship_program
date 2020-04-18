@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" href="../static/lib/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="../static/css/admin.css" media="all">
+
 	</head>
 	<body>
         <div class="layui-fluid">
@@ -26,20 +27,13 @@
 			<div class="layui-col-md12">
 				<div class="layui-card">
 					<div class="layui-card-body ">
-						<form class="layui-form layui-col-space5">
 							<div class="layui-inline layui-show-xs-block">
-								<input type="text" name="start_time" id="start_time" value="" placeholder="请选择开始时间" autocomplete="off" class="layui-input">
+								<input type="text" id="productId" name="name" value=""  placeholder="请输入ID、名称" autocomplete="off" class="layui-input">
 							</div>
 							<div class="layui-inline layui-show-xs-block">
-								<input type="text" name="end_time" id="end_time" value="" placeholder="请选择结束时间" autocomplete="off" class="layui-input">
+								<button class="layui-btn" id="searchCommodityInwareHouse"  lay-submit="" lay-filter=""><i class="layui-icon">&#xe615;</i></button>
 							</div>
-							<div class="layui-inline layui-show-xs-block">
-								<input type="text" name="name" value=""  placeholder="请输入ID、名称" autocomplete="off" class="layui-input">
-							</div>
-							<div class="layui-inline layui-show-xs-block">
-								<button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-							</div>
-						</form>
+
 					</div>
 					<div class="layui-card-body">
 						<table class="layui-table layui-form">
@@ -51,43 +45,12 @@
 									<th>商品数量</th>
 									<th>商品状态</th>
 									<th>生产日期</th>
+									<th>描述</th>
 									<th>管理</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>哇哈哈</td>
-									<td>100</td>
-									<td>待运输</td>
-									<td>2020-3-30</td>
-									<td>
-										<a class="layui-btn layui-btn-sm layui-btn-normal" title="编辑" onclick="execute_open('更新商品状态', 'updateStatus.html?id=1', 1000, 300)" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>10</td>
-									<td>生死疲劳</td>
-									<td>300</td>
-									<td>运输中</td>
-									<td>2020-2-20</td>
-									<td>
-										<a class="layui-btn layui-btn-sm layui-btn-normal" title="编辑" onclick="execute_open('更新商品状态', 'updateStatus.html?id=1', 1000, 300)" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>12</td>
-									<td>口罩</td>
-									<td>1000</td>
-									<td>仓库中</td>
-									<td>2019-6-29</td>
-									<td>
-										<a class="layui-btn layui-btn-sm layui-btn-normal" title="编辑" onclick="execute_open('更新商品状态', 'updateStatus.html?id=1', 1000, 300)" href="javascript:;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-									</td>
-								</tr>
+
 							</tbody>
 						</table>
 					</div>
@@ -109,3 +72,4 @@
 <script src="../static/js/jquery-3.4.1.min.js"></script>
 <script src="../static/lib/layui/layui.js"></script>
 <script src="../static/js/admin.js"></script>
+<script src="../static/js/commmodities_list.js"></script>

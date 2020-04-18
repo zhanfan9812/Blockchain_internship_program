@@ -29,15 +29,14 @@ def wareHouseUpdateStatus(status,id):
     db.session.commit()
     return "1"
 
-@warehouse_page.route("/warehouse/searchByCondition/<productId>")
-def searchCommodityByCondition(productId):
+@warehouse_page.route("/warehouse/searchByCondition/<status>/<productId>")
+def searchCommodityByCondition(status,productId):
     flag = productId.isdigit()
     if flag:
-        product = Product.query.get(productId)
+        product = Product.query.filter(Product.id==productId,Product.status==status).first()
     else:
-        product = Product.query.filter(Product.product_name == productId).first()
+        product = Product.query.filter(Product.product_name == productId,Product.status ==status).first()
     if  product is None:
-        print("空值")
         return ""
     else:
         product_data = {

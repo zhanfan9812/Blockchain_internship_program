@@ -26,26 +26,21 @@
 			<div class="layui-col-md12">
 				<div class="layui-card">
 					<div class="layui-card-body ">
-						<form class="layui-form layui-col-space5">
+
 						<!--	<div class="layui-inline layui-show-xs-block">
 								<select name="article_category_id" lay-filter="article_category_id">
 									<option value="0" selected="selected">请选择文章类型</option>
 									<option value="1">系统文章</option>
 								</select>
 							</div>-->
+
 							<div class="layui-inline layui-show-xs-block">
-								<input type="text" name="start_time" id="start_time" value="" placeholder="请选择开始时间" autocomplete="off" class="layui-input">
+								<input type="text" name="name" id="test" value=""  placeholder="请输入ID、名称" autocomplete="off" class="layui-input">
 							</div>
 							<div class="layui-inline layui-show-xs-block">
-								<input type="text" name="end_time" id="end_time" value="" placeholder="请选择结束时间" autocomplete="off" class="layui-input">
+								<button class="layui-btn" id="search",name="search",lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 							</div>
-							<div class="layui-inline layui-show-xs-block">
-								<input type="text" name="name" value=""  placeholder="请输入ID、名称" autocomplete="off" class="layui-input">
-							</div>
-							<div class="layui-inline layui-show-xs-block">
-								<button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-							</div>
-						</form>
+
 					</div>
 					<div class="layui-card-body">
 						<table class="layui-table layui-form">
@@ -59,32 +54,7 @@
 									<th>生产日期</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>哇哈哈</td>
-									<td>100</td>
-									<td>待运输</td>
-									<td>2020-3-30</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>10</td>
-									<td>生死疲劳</td>
-									<td>300</td>
-									<td>运输中</td>
-									<td>2020-2-20</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>12</td>
-									<td>口罩</td>
-									<td>1000</td>
-									<td>仓库中</td>
-									<td>2019-6-29</td>
-								</tr>
-							</tbody>
+							<tbody></tbody>
 						</table>
 					</div>
 					<div class="page" style="text-align: center">
@@ -105,3 +75,4 @@
 <script src="../static/js/jquery-3.4.1.min.js"></script>
 <script src="../static/lib/layui/layui.js"></script>
 <script src="../static/js/admin.js"></script>
+<script src="../static/js/item4.js"></script>

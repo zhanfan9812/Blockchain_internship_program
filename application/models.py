@@ -3,7 +3,7 @@ from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'users'
-
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
@@ -23,7 +23,7 @@ class User(db.Model):
 
 class Product(db.Model):
     __tablename__ = 'products'
-
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(80), unique=True, nullable=False)
     status = db.Column(db.Integer, nullable=False) #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
@@ -32,10 +32,13 @@ class Product(db.Model):
     description = db.Column(db.Text)
     block_info = db.Column(db.Text)
 
-    def __init__(self, product_name, status, number):
+    def __init__(self, id, product_name, status, number, date, description):
+        self.id = id
         self.product_name = product_name
         self.status = status
         self.number = number
+        self.date_of_pro = date
+        self.description = description
 
     def __repr__(self):
         return '<Product product_name:%r>' % self.product_name
@@ -43,7 +46,7 @@ class Product(db.Model):
 
 class Logistic(db.Model):
     __tablename__ = 'logistics'
-
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.Integer, nullable=False)  #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))

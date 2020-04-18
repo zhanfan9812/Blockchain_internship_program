@@ -8,9 +8,9 @@ admin_page = Blueprint('admin_page', __name__)
 
 @admin_page.route('/select_username',methods=["POST"])
 def select_username():
-    name = request.form.get('username')
+    username = request.form.get('username')
     role = request.form.get('role')
-    user = User.query.filter(User.username == name,User.role == role).first()
+    user = User.query.filter(User.username == username,User.role == role).first()
     if (user == None):
         return '0'
     data = {
@@ -40,10 +40,49 @@ def select_role():
 @admin_page.route('/delete_id',methods=["POST"])
 def delete_id():
     id = request.form.get('id')
-    user = User.query.filter(User.id == id).first()
-    if (user == None):
-        return '1'
+    user = User.query.get(id)
+    if (user is None):
+        return '0'
     else:
         db.session.delete(user)
         db.session.commit()
+        return '1'
+
+@admin_page.route('/add',methods=["POST"])
+def add():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    email = request.form.get('email')
+    gender = request.form.get('gender')
+    role = request.form.get('role')
+    if (username == "")| (password == "") | (role == ""):
         return '0'
+    if User.query.filter(User.username == username).first():
+        return '0'
+    user = User(username=username, password=password, email=email, gender=gender, role=role)
+    db.session.add(user)
+    db.session.commit()
+    return '1'
+
+@admin_page.route('/update_id',methods=["POST"])
+def update_id():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    email = request.form.get('email')
+    gender = request.form.get('gender')
+    role = request.form.get('role')
+    id = request.form.get('id')
+
+    if (username == "")| (password == "") | (role == ""):
+        return '0'
+    if User.query.filter(User.username == username).first():
+        return '0'
+    user = User.query.get(id)
+    user.username = username
+    user.password = password
+    user.email = email
+    user.gender = gender
+    user.role = role
+
+    db.session.commit()
+    return '1'

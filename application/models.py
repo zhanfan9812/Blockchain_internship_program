@@ -28,6 +28,7 @@ class Product(db.Model):
     number = db.Column(db.Integer, nullable=False)
     date_of_pro = db.Column(db.DateTime, nullable=False, default=datetime.now)
     description = db.Column(db.Text)
+    block_info = db.Column(db.Text)
 
     def __init__(self, product_name, status, number):
         self.product_name = product_name
@@ -44,6 +45,7 @@ class Logistic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.Integer, nullable=False)  #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    operator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     random_num = db.Column(db.Integer)
     current_hash = db.Column(db.String(200))
     pre_hash = db.Column(db.String(200))

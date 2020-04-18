@@ -17,7 +17,8 @@ $(function () {
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].date_of_pro+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].description+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>\n" +
-                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'updateStatus.html?id="+data.data[i].id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus.html?id="+data.data[i].id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus.html?id="+data.data[i].id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>物流</a>\n" +
                   "\t\t\t\t\t\t\t\t\t</td>\n" +
                   "\t\t\t\t\t\t\t\t</tr>"
           }
@@ -49,7 +50,8 @@ $(function () {
                   "\t\t\t\t\t\t\t\t\t<td>"+data.product.date_of_pro+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+data.product.description+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>\n" +
-                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'updateStatus.html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus.html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus.html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>物流</a>\n" +
                   "\t\t\t\t\t\t\t\t\t</td>\n" +
                   "\t\t\t\t\t\t\t\t</tr>"
                      $("tbody").append(html);

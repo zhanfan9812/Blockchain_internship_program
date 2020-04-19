@@ -32,11 +32,15 @@ def dbbuild():
     admin2 = User(username='admin2', password='123456', role=2)
     admin3 = User(username='admin3', password='123456', role=3)
     admin4 = User(username='admin4', password='123456', role=4)
-    product1 = Product(id=1,product_name='生产中的商品', status='1', number='1',date="20200202",description="00")
-    product2 = Product(id=2,product_name='待运输的商品', status='2', number='2',date="20200202",description="00")
-    product3 = Product(id=3,product_name='运输中的商品', status='3', number='3',date="20200202",description="00")
-    product4 = Product(id=4,product_name='已到达的商品', status='4', number='4',date="20200202",description="00")
-    product5 = Product(id=5,product_name='已入库的商品', status='5', number='5',date="20200202",description="00")
+    product1 = Product(product_name='生产中的商品', status='1', number='1')
+
+    product2 = Product(product_name='待运输的商品', status='2', number='2')
+
+    product3 = Product(product_name='运输中的商品', status='3', number='3')
+
+    product4 = Product(product_name='已到达的商品', status='4', number='4')
+
+    product5 = Product(product_name='已入库的商品', status='5', number='5')
     db.session.add(admin1)
     db.session.add(admin2)
     db.session.add(admin3)

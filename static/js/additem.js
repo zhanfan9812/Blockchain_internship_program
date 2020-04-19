@@ -1,9 +1,7 @@
   $(function  () {
     $('#execute').click(function(){
-    alert("ddddd");
         var num = $('#productNum').val();
         var itemName = $('#productName').val();
-        var description=$('#productDescription').val();
          var regPos = / ^\d+$/;
 
         if(!regPos.test(num)|| itemName==null)
@@ -12,7 +10,7 @@
        window.location.href='/users';
         }
         $.ajax({
-            url:'/producers/additem/'+num+"/"+itemName+"/"+description,
+            url:'/producers/additem/'+num+"/"+itemName,
             method:'GET',
             success:function(response){
                     alert('add success')

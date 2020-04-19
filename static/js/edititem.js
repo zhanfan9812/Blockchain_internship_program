@@ -4,7 +4,7 @@ $(function(){
     /* 得到id*/
     var id = url.split("=")[1];
     alert(id)
-    $("#execute").click(function () {
+    $("#saveStatus").click(function () {
         $.ajax({
             url:"/producer/edititem/"+$('#pid option:selected').val()+"/"+id,
             method:"get",

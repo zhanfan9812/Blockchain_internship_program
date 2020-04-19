@@ -11,12 +11,11 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     gender = db.Column(db.String(120))
 
-    def __init__(self, username, password, role, email, gender):
+    def __init__(self, username, password, role):
         self.username = username
         self.password = password
         self.role = role
-        self.gender = gender
-        self.email = email
+
 
     def __repr__(self):
         return '<User username:%r>' % self.username
@@ -32,13 +31,10 @@ class Product(db.Model):
     description = db.Column(db.Text)
     block_info = db.Column(db.Text)
 
-    def __init__(self, id, product_name, status, number, date, description):
-        self.id = id
+    def __init__(self, product_name, status, number):
         self.product_name = product_name
         self.status = status
         self.number = number
-        self.date_of_pro = date
-        self.description = description
 
     def __repr__(self):
         return '<Product product_name:%r>' % self.product_name

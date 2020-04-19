@@ -6,17 +6,13 @@ import json
 
 producer_page = Blueprint('producer_page', __name__)
 
-@producer_page.route('/producers/additem/<productNum>/<productName>/<productDescription>', methods=["get"])
-def additem(productNum,productName,productDescription):
+@producer_page.route('/producers/additem/<productNum>/<productName>', methods=["get"])
+def additem(productNum,productName):
    # name=session.get('user_name')
-    print(productNum)
-    item_id=Product.query.count()+1
     product_name = productName
     Status=1
     Number=productNum
-    date_of_produce=time.gmtime()
-    text=productDescription
-    item=Product(id=item_id,product_name=product_name,status=Status,number=Number,date=date_of_produce,description=text)
+    item=Product(product_name=product_name,status=Status,number=Number)
     db.session.add(item)
     db.session.commit()
     return "1"
@@ -35,7 +31,7 @@ def deleteitem():
 
 @producer_page.route('/producer/edititem/<status>/<id>', methods=["GET"])
 def producerUpdateStatus(status, id):
-    print(id)
+    print(status)
     product = Product.query.get(id)
     product.status = status
     db.session.commit()

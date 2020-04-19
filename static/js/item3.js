@@ -60,6 +60,7 @@ console.log(A);
 
 $('#search').click(function(){
         var name = $('#test').val();
+
       $.ajax({
             url:'/producers/searchbyid2',
             method:'POST',

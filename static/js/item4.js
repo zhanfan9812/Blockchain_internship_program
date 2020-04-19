@@ -27,7 +27,9 @@ function delete_id(obj, id) {
 $(function  () {
     var url = decodeURI(window.location.href);
     var id = url.split('=')[1]
+ var A=["0","生产中","待运输","运输中","已到达"];
 
+console.log(A);
       $.ajax({
             url:'/producers/list',
             method:'POST',
@@ -42,7 +44,7 @@ $(function  () {
                                         "<td>"+response.data[i].id+"</td>"+
                                         "<td>"+response.data[i].product_name+"</td>"+
                                         "<td>"+response.data[i].number+"</td>"+
-                                        "<td>"+response.data[i].status+"</td>"+
+                                        "<td>"+A[response.data[i].status]+"</td>"+
                                         "<td>"+response.data[i].date+"</td>";
 
 
@@ -54,6 +56,9 @@ $(function  () {
 
 $('#search').click(function(){
         var name = $('#test').val();
+         var A=["0","生产中","待运输","运输中","已到达"];
+
+console.log(A);
       $.ajax({
             url:'/producers/searchbyid',
             method:'POST',
@@ -73,7 +78,7 @@ $('#search').click(function(){
                                         "<td>"+response.data[i].id+"</td>"+
                                         "<td>"+response.data[i].product_name+"</td>"+
                                         "<td>"+response.data[i].number+"</td>"+
-                                        "<td>"+response.data[i].status+"</td>"+
+                                        "<td>"+A[response.data[i].status]+"</td>"+
                                         "<td>"+response.data[i].date+"</td>";
                                         }
                     $('tbody').append(html);

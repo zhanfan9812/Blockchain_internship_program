@@ -1,4 +1,3 @@
-
 function delete_id(obj, id) {
     layer.confirm('确认要删除吗？', function(index) {
 		layer.load();
@@ -7,13 +6,11 @@ function delete_id(obj, id) {
             type:'Post',
             data:{productId:id},
             success:function(data) {
-                alert(data);
+//                alert(data);
 				layer.closeAll('loading');
                 if (data == '0') {
                     $(obj).parents("tr").remove();
-                    layer.msg(data.message,{icon:1,time:1000});return false;
-                } else {
-                   layer.msg(data.message,{icon:2,time:1000});return false;
+                    alert("删除成功")
                 }
             },
 			error : function(e){
@@ -28,9 +25,8 @@ function delete_id(obj, id) {
 $(function  () {
     var url = decodeURI(window.location.href);
     var id = url.split('=')[1]
- var A=["0","生产中","待运输","运输中","已到达"];
 
-console.log(A);
+//console.log(A);
       $.ajax({
             url:'/producers/list3',
             method:'POST',
@@ -45,11 +41,12 @@ console.log(A);
                                         "<td>"+response.data[i].id+"</td>"+
                                         "<td>"+response.data[i].product_name+"</td>"+
                                         "<td>"+response.data[i].number+"</td>"+
-                                        "<td>"+A[response.data[i].status]+"</td>"+
+                                        "<td>生产中</td>"+
                                         "<td>"+response.data[i].date+"</td>"+
+                                        "<td>"+response.data[i].description+"</td>"+
 
 									"<td>"+
-									          "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'producerUpdateStatus.html?id="+response.data[i].id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+									          "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus1.html?id="+response.data[i].id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
 									"<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this,"+response.data[i].id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"	+
 									"</td>"+
 								"</tr>";
@@ -61,39 +58,34 @@ console.log(A);
 
 $('#search').click(function(){
         var name = $('#test').val();
- var A=["0","生产中","待运输","运输中","已到达"];
 
-console.log(A);
+//console.log(A);
       $.ajax({
             url:'/producers/searchbyid3',
             method:'POST',
             async : false,
             data:{product_name:name},
-            success:function(response){
-                    if(response.data==null)
-                        {
-                        alert("nothing found");
-                        }
-                    $('tbody').empty();
-                    var html = "";
-                    for (var i = 0 ;i<response.data.length;i++){
-                             var j=i+1;
-                             html+="<tr>" +
-									"<td>"+j+"</td>"+
-                                        "<td>"+response.data[i].id+"</td>"+
-                                        "<td>"+response.data[i].product_name+"</td>"+
-                                        "<td>"+response.data[i].number+"</td>"+
-                                        "<td>"+A[response.data[i].status]+"</td>"+
-                                        "<td>"+response.data[i].date+"</td>"+
-
-									"<td>"+
-									          "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'producerUpdateStatus.html?id="+response.data[i].id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
-									"<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this,"+response.data[i].id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"	+
-									"</td>"+
-								"</tr>"+"<script src="+"../static/js/edititem.js"+"></script>";
-                                        }
-                    $('tbody').append(html);
-
+            success:function (data) {
+                if (data == null ||data == ""){
+                   alert("未搜索到相应商品！")
+                    return}
+                else {
+                    $("tbody").empty();
+                     html = "<tr>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+1+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.id+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.product_name+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.number+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>生产中</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.date_of_pro+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.description+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus1.html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this,"+data.product.id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>\n" +
+                    "\t\t\t\t\t\t\t\t\t</td>\n" +
+                    "\t\t\t\t\t\t\t\t</tr>"
+                    $("tbody").append(html);
+                }
             }
         });
 
@@ -102,7 +94,7 @@ console.log(A);
           })
 
     })
-
+//"<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this,"+response.data.id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"
 
 
 

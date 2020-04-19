@@ -2,19 +2,24 @@
     $('#execute').click(function(){
         var num = $('#productNum').val();
         var itemName = $('#productName').val();
-         var regPos = / ^\d+$/;
-
-        if(!regPos.test(num)|| itemName==null)
-        {
-        alert("not allowed");
-       window.location.href='/users';
+//        alert(itemName)
+        var description = $('#productDescription').val();
+//        alert(description)
+        if(description==null||description==''){
+            alert('请添加商品描述');
+            return;
         }
         $.ajax({
-            url:'/producers/additem/'+num+"/"+itemName,
+            url:'/producers/additem/'+num+"/"+itemName+"/"+description,
             method:'GET',
             success:function(response){
-                    alert('add success')
-                    window.location.href='/users';
+//                alert(response)
+                if(response=='1')
+                    alert('添加商品失败，商品名称不能为纯数字')
+                else if(response=='2')
+                    alert('添加商品失败，商品数量必须为正整数')
+                else
+                    alert('添加商品成功')
             }
         });
     })

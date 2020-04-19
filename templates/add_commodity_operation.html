@@ -16,30 +16,29 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">商品名称</label>
 						<div class="layui-input-inline layer-inputs">
-							<input type="text" name="productName" id="productName" value="" placeholder="请输入待生产商品名称" class="layui-input">
+							<input required="required" type="text" name="productName" id="productName" value="" placeholder="请输入待生产商品名称" class="layui-input">
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入待生产商品名称</div>
+						<!--<div class="layui-form-mid layui-word-aux">请输入待生产商品名称</div>-->
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">商品数量</label>
 						<div class="layui-input-inline layer-inputs">
-							<input type="text" name="productNum" id="productNum" value="" placeholder="请输入待生产商品数量" class="layui-input">
+							<input required="required" type="text" name="productNum" id="productNum" value="" placeholder="请输入待生产商品数量" class="layui-input">
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入待生产商品数量</div>
+						<!--<div class="layui-form-mid layui-word-aux">请输入待生产商品数量</div>-->
 					</div>
 
 					<div class="layui-form-item">
 						<label class="layui-form-label">商品描述</label>
 						<div class="layui-input-inline layer-inputs">
-							<textarea name="productDesctiption" id="productDesctiption" value="" style="width:200px;height:80px;" class="layui-textarea">
-							</textarea>
+							<textarea placeholder="请输入商品描述信息" name="productDescription" id="productDescription" value="" style="width:200px;height:80px;" class="layui-textarea"></textarea>
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入商品描述信息</div>
+						<!--<div class="layui-form-mid layui-word-aux">请输入商品描述信息</div>-->
 					</div>
 					<div class="layui-form-item" style="margin-left: 50px;">
 					<!--	<input type="hidden" name="request_url" id="request_url" value="">
 						<input type="hidden" name="id" id="id" value="">-->
-						<button class="layui-btn" id="execute" name="execute" lay-submit="execute" lay-filter="execute"><i class="layui-icon layui-icon-form"></i>保存</button>
+						<button class="layui-btn" id="execute" name="execute"><i class="layui-icon layui-icon-form"></i>保存</button>
 					</div>
 				</form>
 			</div>
@@ -48,5 +47,5 @@
 </html>
 <script src="../static/js/jquery-3.4.1.min.js"></script>
 <script src="../static/lib/layui/layui.js"></script>
-<script src="../static/js/admin.js"></script>
+<!--<script src="../static/js/admin.js"></script>-->
 <script src="../static/js/additem.js"></script>

@@ -4,7 +4,6 @@ from application.views.user import user_page
 from application.views.admin import admin_page
 from application.views.item import producer_page
 from application.views.warehouse import warehouse_page
-from application.views.logistician import logistician_page
 from application.models import User,Product
 import os
 import click
@@ -20,7 +19,6 @@ db.init_app(app)
 
 app.register_blueprint(user_page)
 app.register_blueprint(admin_page)
-app.register_blueprint(logistician_page)
 app.register_blueprint(warehouse_page)
 app.register_blueprint(producer_page)
 

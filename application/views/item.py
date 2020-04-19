@@ -6,23 +6,26 @@ import json
 
 producer_page = Blueprint('producer_page', __name__)
 
-@producer_page.route('/producers/additem/<productNum>/<productName>', methods=["get"])
-def additem(productNum,productName):
-   # name=session.get('user_name')
-    product_name = productName
-    Status=1
-    Number=productNum
-    item=Product(product_name=product_name,status=Status,number=Number)
-    db.session.add(item)
-    db.session.commit()
-    return "1"
+@producer_page.route('/producers/additem/<productNum>/<productName>/<productDescription>', methods=["get"])
+def additem(productNum,productName,productDescription):
+    numFlag=productNum.isdigit()
+    nameFlag=productName.isdigit()
+    if nameFlag:
+        return '1'
+    elif not numFlag:
+        return '2'
+    else:
+        item=Product(product_name=productName,status=1,number=productNum,description=productDescription)
+        db.session.add(item)
+        db.session.commit()
+        return '3'
 
 
 @producer_page.route('/producers/deleteitem', methods=["GET","POST"])
 def deleteitem():
     id = request.form.get('productId')
     item=Product.query.get(id)
-    print(item)
+    # print(item)
     if(item is None):
         return "1"
     db.session.delete(item)
@@ -31,7 +34,7 @@ def deleteitem():
 
 @producer_page.route('/producer/edititem/<status>/<id>', methods=["GET"])
 def producerUpdateStatus(status, id):
-    print(status)
+    # print(status)
     product = Product.query.get(id)
     product.status = status
     db.session.commit()
@@ -42,7 +45,7 @@ def list():
     products = Product.query.all()
     if products==None:
         return render_template('/all_commodities_list.html')
-    print(products)
+    # print('all products:',products)
     data=[]
     for product in products:
         item_dict = {
@@ -52,7 +55,7 @@ def list():
         'status': product.status,
         'date': product.date_of_pro,
         'description': product.description
-    }
+        }
         data.append(item_dict)
     return jsonify({"data": data})
 
@@ -60,61 +63,66 @@ def list():
 @producer_page.route('/producers/searchbyid', methods=["GET","POST"])
 def select_by_name():
     name=request.form.get('product_name')
-    products = Product.query.filter(Product.product_name==name)
-    print(products)
-    data=[]
-    for product in products:
+    flag = name.isdigit()
+    if flag:
+        product = Product.query.filter(Product.id==name).first()
+    else:
+        product = Product.query.filter(Product.product_name == name).first()
+    if product is None:
+        return ""
+    else:
+        print(product)
         item_dict = {
-        'id': product.id,
-        'product_name': product.product_name,
-        'number': product.number,
-        'status': product.status,
-        'date': product.date_of_pro,
-        'description': product.description
-    }
-        data.append(item_dict)
-    return jsonify({"data": data})
+            'id': product.id,
+            'product_name': product.product_name,
+            'number': product.number,
+            'status': product.status,
+            'date': product.date_of_pro,
+            'description': product.description
+        }
+        return jsonify({"data": item_dict})
 
-@producer_page.route('/producers/list2', methods=["post"])
-def list2():
-    products = Product.query.filter(Product.status=='2').all()
-    if products is None:
-        return render_template('/comodities_needTransport.html')
-    print(products)
-    data=[]
-    for product in products:
-        item_dict = {
-        'id': product.id,
-        'product_name': product.product_name,
-        'number': product.number,
-        'status': product.status,
-        'date': product.date_of_pro,
-        'description': product.description
-    }
-        data.append(item_dict)
-    return jsonify({"data": data})
-
-
-@producer_page.route('/producers/searchbyid2', methods=["GET","POST"])
-def select_by_name2():
-    name=request.form.get('product_name')
-    products = Product.query.filter(Product.status == '2',Product.product_name==name).all()
-    print(products)
-    data=[]
-    for product in products:
-        item_dict = {
-        'id': product.id,
-        'product_name': product.product_name,
-        'number': product.number,
-        'status': product.status,
-        'date': product.date_of_pro,
-        'description': product.description
-    }
-        data.append(item_dict)
-    return jsonify({"data": data})
+# @producer_page.route('/producers/list2', methods=["post"])
+# def list2():
+#     products = Product.query.filter(Product.status=='2').all()
+#     if products is None:
+#         return render_template('/comodities_needTransport.html')
+#     print(products)
+#     data=[]
+#     for product in products:
+#         item_dict = {
+#         'id': product.id,
+#         'product_name': product.product_name,
+#         'number': product.number,
+#         'status': product.status,
+#         'date': product.date_of_pro,
+#         'description': product.description
+#     }
+#         data.append(item_dict)
+#     return jsonify({"data": data})
+#
+#
+# @producer_page.route('/producers/searchbyid2', methods=["GET","POST"])
+# def select_by_name2():
+#     name=request.form.get('product_name')
+#     products = Product.query.filter(Product.status == '2',Product.product_name==name).all()
+#     print(products)
+#     data=[]
+#     for product in products:
+#         item_dict = {
+#         'id': product.id,
+#         'product_name': product.product_name,
+#         'number': product.number,
+#         'status': product.status,
+#         'date': product.date_of_pro,
+#         'description': product.description
+#     }
+#         data.append(item_dict)
+#     return jsonify({"data": data})
 
 @producer_page.route('/producers/list3', methods=["post"])
 def list3():
+    print('arrive list3')
     products = Product.query.filter(Product.status == 1).all()
     if products==None:
         return render_template('/commodities_making_list.html')
@@ -136,18 +144,61 @@ def list3():
 @producer_page.route('/producers/searchbyid3', methods=["post"])
 def select_by_name3():
     name=request.form.get('product_name')
-    products = Product.query.filter(Product.status == 1, Product.product_name == name).all()
-    print(products)
-    data=[]
-    for product in products:
+    print(name)
+    flag = name.isdigit()
+    if flag:
+        product = Product.query.filter(Product.status == 1,Product.id==name).first()
+    else:
+        product = Product.query.filter(Product.status == 1,Product.product_name == name).first()
+    if product is None:
+        return ""
+    else:
+        print(product)
         item_dict = {
-        'id': product.id,
-        'product_name': product.product_name,
-        'number': product.number,
-        'status': product.status,
-        'date': product.date_of_pro,
-        'description': product.description
-    }
-        data.append(item_dict)
-    return jsonify({"data": data})
+            'id': product.id,
+            'product_name': product.product_name,
+            'number': product.number,
+            'status': product.status,
+            'date_of_pro': product.date_of_pro,
+            'description': product.description
+        }
+        return jsonify({"product": item_dict})
+    # name=request.form.get('product_name')
+    # products = Product.query.filter(Product.status == 1, Product.product_name == name).all()
+    # print(products)
+    # data=[]
+    # for product in products:
+    #     item_dict = {
+    #     'id': product.id,
+    #     'product_name': product.product_name,
+    #     'number': product.number,
+    #     'status': product.status,
+    #     'date': product.date_of_pro,
+    #     'description': product.description
+    # }
+    #     data.append(item_dict)
+    # return jsonify({"data": data})
+
+# @producer_page.route('/producers/searchbyid', methods=["GET","POST"])
+# def select_by_name():
+#     name=request.form.get('product_name')
+#     print(name)
+#     flag = name.isdigit()
+#     if flag:
+#         product = Product.query.filter(Product.status == 1,Product.id==name).first()
+#     else:
+#         product = Product.query.filter(Product.status == 1,Product.product_name == name).first()
+#     if product is None:
+#         return ""
+#     else:
+#         print(product)
+#         item_dict = {
+#             'id': product.id,
+#             'product_name': product.product_name,
+#             'number': product.number,
+#             'status': product.status,
+#             'date': product.date_of_pro,
+#             'description': product.description
+#         }
+#         return jsonify({"data": item_dict})
 

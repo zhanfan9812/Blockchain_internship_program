@@ -2,6 +2,7 @@ $(function () {
       var url = decodeURI(window.location.href);
     /* 得到id*/
     var status = url.split("=")[1];
+    var A=["0","生产中","待运输","运输中","已到达","已入库"];
    $.ajax({
        url:"/getArriveCommList/"+status,
        success:function (data) {
@@ -14,7 +15,7 @@ $(function () {
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].id+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].product_name+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].number+"</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>已到达</td>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>"+A[status]+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].date_of_pro+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].description+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>\n" +
@@ -43,23 +44,21 @@ $(function () {
                 else {
                     $("tbody").empty();
                       html = "<tr>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>"+1+"</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>"+data.product.id+"</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>"+data.product.product_name+"</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>"+data.product.number+"</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>已到达</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>"+data.product.date_of_pro+"</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>"+data.product.description+"</td>\n" +
-                  "\t\t\t\t\t\t\t\t\t<td>\n" +
-                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus.html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
-                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus.html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>物流</a>\n" +
-                  "\t\t\t\t\t\t\t\t\t</td>\n" +
-                  "\t\t\t\t\t\t\t\t</tr>"
-                     $("tbody").append(html);
-          }
-
+                    "\t\t\t\t\t\t\t\t\t<td>"+1+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.id+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.product_name+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.number+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+A[status]+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.date_of_pro+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>"+data.product.description+"</td>\n" +
+                    "\t\t\t\t\t\t\t\t\t<td>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus"+status+".html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus"+status+".html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>物流二维码</a>\n" +
+                    "\t\t\t\t\t\t\t\t\t</td>\n" +
+                    "\t\t\t\t\t\t\t\t</tr>"
+                    $("tbody").append(html);
                 }
-
+            }
         })
     });
 });

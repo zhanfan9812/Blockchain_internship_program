@@ -31,10 +31,11 @@ class Product(db.Model):
     description = db.Column(db.Text)
     block_info = db.Column(db.Text)
 
-    def __init__(self, product_name, status, number):
+    def __init__(self, product_name, status, number, description):
         self.product_name = product_name
         self.status = status
         self.number = number
+        self.description = description
 
     def __repr__(self):
         return '<Product product_name:%r>' % self.product_name

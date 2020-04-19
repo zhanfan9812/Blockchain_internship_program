@@ -7,7 +7,7 @@ function delete_id(obj, id) {
             data:{'id':id},
             dataType:'json',
             success:function(data) {
-                alert(data);
+//                alert(data);
 				layer.closeAll('loading');
                 if (data == '1') {
                     $(obj).parents("tr").remove();
@@ -34,11 +34,12 @@ $(function  () {
         var role = url.split('=')[1]
 //        alert(role);
     }
-    if(url.search(/role_operation.html/)!=-1)
+    if(url.search(/role_operation.html?id=/)!=-1)
     {
         var update_id = url.split('=')[1]
 
         $('#save').click(function(){
+            alert("12312312")
             var username = $('#username_input').val();
             var password = $('#password_input').val();
             var email = $('#email_input').val();
@@ -47,13 +48,20 @@ $(function  () {
             $.ajax({
                 url:'/update_id',
                 method:'POST',
+                async : false,
                 data:{username:username,password:password,email:email,gender:gender,role:role_input,id:update_id},
                 success:function(response){
                     if(response=='1'){
                         alert('修改成功');
-
-                    }else{
-                        alert('修改失败');
+                    }
+                    else if(response=='0_1'){
+                        alert('输入不能为空');
+                    }
+                    else if(response=='0_2'){
+                        alert('用户名已被注册');
+                    }
+                    else if(response=='0_3'){
+                        alert('邮箱已被注册');
                     }
                 }
             });
@@ -101,7 +109,7 @@ $(function  () {
                 }
                 else{
                     $("tbody").empty();
-                    alert(response.username);
+//                    alert(response.username);
                     var html= "<tr>" +
                                     "<td>"+1+"</td>"+
                                     "<td>"+response.id+"</td>"+
@@ -123,6 +131,7 @@ $(function  () {
 
 
     $('#save').click(function(){
+        alert("12312312")
         var username = $('#username_input').val();
         var password = $('#password_input').val();
         var email = $('#email_input').val();
@@ -131,13 +140,20 @@ $(function  () {
         $.ajax({
             url:'/add',
             method:'POST',
+            async : false,
             data:{username:username,password:password,email:email,gender:gender,role:role_input},
             success:function(response){
                 if(response=='1'){
                     alert('保存成功');
-
-                }else{
-                    alert('保存失败');
+                }
+                else if(response=='0_1'){
+                    alert('输入不能为空');
+                }
+                else if(response=='0_2'){
+                    alert('用户名已被注册');
+                }
+                else if(response=='0_3'){
+                    alert('邮箱已被注册');
                 }
             }
         });

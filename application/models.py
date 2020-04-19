@@ -11,10 +11,12 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     gender = db.Column(db.String(120))
 
-    def __init__(self, username, password, role):
+    def __init__(self, username, password, role, email, gender):
         self.username = username
         self.password = password
+        self.email = email
         self.role = role
+        self.gender = gender
 
 
     def __repr__(self):

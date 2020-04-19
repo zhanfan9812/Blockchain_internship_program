@@ -50,15 +50,18 @@ def delete_id():
 
 @admin_page.route('/add',methods=["POST"])
 def add():
+    print("123213123123123")
     username = request.form.get('username')
     password = request.form.get('password')
     email = request.form.get('email')
     gender = request.form.get('gender')
     role = request.form.get('role')
     if (username == "")| (password == "") | (role == ""):
-        return '0'
+        return '0_1'
     if User.query.filter(User.username == username).first():
-        return '0'
+        return '0_2'
+    if User.query.filter(User.email == email).first():
+        return '0_3'
     user = User(username=username, password=password, email=email, gender=gender, role=role)
     db.session.add(user)
     db.session.commit()
@@ -74,9 +77,11 @@ def update_id():
     id = request.form.get('id')
 
     if (username == "")| (password == "") | (role == ""):
-        return '0'
+        return '0_1'
     if User.query.filter(User.username == username).first():
-        return '0'
+        return '0_2'
+    if User.query.filter(User.email == email,User.id != id).first():
+        return '0_3'
     user = User.query.get(id)
     user.username = username
     user.password = password

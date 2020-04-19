@@ -39,7 +39,7 @@ $(function  () {
         var update_id = url.split('=')[1]
 
         $('#save').click(function(){
-            alert("12312312")
+//            alert("12312312")
             var username = $('#username_input').val();
             var password = $('#password_input').val();
             var email = $('#email_input').val();
@@ -131,7 +131,7 @@ $(function  () {
 
 
     $('#save').click(function(){
-        alert("12312312")
+//        alert("12312312")
         var username = $('#username_input').val();
         var password = $('#password_input').val();
         var email = $('#email_input').val();
@@ -154,6 +154,9 @@ $(function  () {
                 }
                 else if(response=='0_3'){
                     alert('邮箱已被注册');
+                }
+                else if(response=='0_4'){
+                    alert('此角色不存在');
                 }
             }
         });

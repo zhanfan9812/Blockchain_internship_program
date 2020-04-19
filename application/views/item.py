@@ -6,19 +6,18 @@ import json
 
 producer_page = Blueprint('producer_page', __name__)
 
-@producer_page.route('/producers/additem/<productNum>/<productName>/<productDescription>', methods=["get"])
+@producer_page.route('/producers/additem/<productNum>/<productName>/<productDescription>', methods=["POST"])
 def additem(productNum,productName,productDescription):
     numFlag=productNum.isdigit()
     nameFlag=productName.isdigit()
     if nameFlag:
-        return '1'
-    elif not numFlag:
-        return '2'
-    else:
-        item=Product(product_name=productName,status=1,number=productNum,description=productDescription)
-        db.session.add(item)
-        db.session.commit()
-        return '3'
+        return '0_1'
+    if not numFlag:
+        return '0_2'
+    item=Product(product_name=productName,status=1,number=productNum,description=productDescription)
+    db.session.add(item)
+    db.session.commit()
+    return '1'
 
 
 @producer_page.route('/producers/deleteitem', methods=["GET","POST"])

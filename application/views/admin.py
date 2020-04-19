@@ -62,6 +62,8 @@ def add():
         return '0_2'
     if User.query.filter(User.email == email).first():
         return '0_3'
+    if not ((role == "1")| (role == "2") | (role == "3") | (role == "4")):
+        return '0_4'
     user = User(username=username, password=password, email=email, gender=gender, role=role)
     db.session.add(user)
     db.session.commit()

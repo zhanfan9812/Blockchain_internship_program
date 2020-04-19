@@ -1,23 +1,15 @@
 function delete_id(obj, id) {
-    layer.confirm('确认要删除吗？', function(index) {
-		layer.load();
-        $.ajax({
+    $.ajax({
             url:'/producers/deleteitem',
             type:'Post',
             data:{productId:id},
             success:function(data) {
-//                alert(data);
-				layer.closeAll('loading');
                 if (data == '0') {
                     $(obj).parents("tr").remove();
-                    alert("删除成功")
+                    alert("删除成功");
+                    return;
                 }
-            },
-			error : function(e){
-			layer.closeAll('loading');
-				layer.msg(e.responseText, {icon: 2, time: 1000});
-			}
-        });
+            }
     });
 }
 

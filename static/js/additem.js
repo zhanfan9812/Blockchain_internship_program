@@ -11,15 +11,15 @@
         }
         $.ajax({
             url:'/producers/additem/'+num+"/"+itemName+"/"+description,
-            method:'GET',
+            method:'POST',
             success:function(response){
 //                alert(response)
                 if(response=='1')
-                    alert('添加商品失败，商品名称不能为纯数字')
-                else if(response=='2')
-                    alert('添加商品失败，商品数量必须为正整数')
-                else
-                    alert('添加商品成功')
+                    alert('添加商品成功');
+                else if(response=='0_1')
+                    alert('添加商品失败，商品名称不能为纯数字');
+                else if(response=='0_2')
+                    alert('添加商品失败，商品数量必须为正整数');
             }
         });
     })

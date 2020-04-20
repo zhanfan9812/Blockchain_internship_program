@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, request,jsonify,url_for, flash
-from application.models import Product,Logistic
+from application.models import Product
 from application.extension import db
 import time
 import json
@@ -14,6 +14,8 @@ def additem(productNum,productName,productDescription):
         return '0_1'
     if not numFlag:
         return '0_2'
+    if Product.query.filter(Product.product_name == productName).first():
+        return '0_3'
     item=Product(product_name=productName,status=1,number=productNum,description=productDescription)
     db.session.add(item)
     db.session.commit()
@@ -121,11 +123,11 @@ def select_by_name():
 
 @producer_page.route('/producers/list3', methods=["post"])
 def list3():
-    print('arrive list3')
+    # print('arrive list3')
     products = Product.query.filter(Product.status == 1).all()
     if products==None:
         return render_template('/commodities_making_list.html')
-    print(products)
+    # print(products)
     data=[]
     for product in products:
         item_dict = {
@@ -143,7 +145,7 @@ def list3():
 @producer_page.route('/producers/searchbyid3', methods=["post"])
 def select_by_name3():
     name=request.form.get('product_name')
-    print(name)
+    # print(name)
     flag = name.isdigit()
     if flag:
         product = Product.query.filter(Product.status == 1,Product.id==name).first()
@@ -152,7 +154,7 @@ def select_by_name3():
     if product is None:
         return ""
     else:
-        print(product)
+        # print(product)
         item_dict = {
             'id': product.id,
             'product_name': product.product_name,

@@ -26,19 +26,19 @@ app.register_blueprint(producer_page)
 def dbbuild():
     db.drop_all()
     db.create_all()
-    admin1 = User(username='admin1', password='123456', role=1)
-    admin2 = User(username='admin2', password='123456', role=2)
-    admin3 = User(username='admin3', password='123456', role=3)
-    admin4 = User(username='admin4', password='123456', role=4)
-    product1 = Product(product_name='生产中的商品', status='1', number='1')
+    admin1 = User(username='admin1', password='123456', role=1, email='admin1@163.com', gender='1')
+    admin2 = User(username='admin2', password='123456', role=2, email='admin2@163.com', gender='0')
+    admin3 = User(username='admin3', password='123456', role=3, email='admin3@163.com', gender='1')
+    admin4 = User(username='admin4', password='123456', role=4, email='admin4@163.com', gender='0')
+    product1 = Product(product_name='生产中的商品', status='1', number='1', description='description1')
 
-    product2 = Product(product_name='待运输的商品', status='2', number='2')
+    product2 = Product(product_name='待运输的商品', status='2', number='2', description='description2')
 
-    product3 = Product(product_name='运输中的商品', status='3', number='3')
+    product3 = Product(product_name='运输中的商品', status='3', number='3', description='description3')
 
-    product4 = Product(product_name='已到达的商品', status='4', number='4')
+    product4 = Product(product_name='已到达的商品', status='4', number='4', description='description4')
 
-    product5 = Product(product_name='已入库的商品', status='5', number='5')
+    product5 = Product(product_name='已入库的商品', status='5', number='5', description='description5')
     db.session.add(admin1)
     db.session.add(admin2)
     db.session.add(admin3)

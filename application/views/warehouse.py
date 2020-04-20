@@ -22,12 +22,49 @@ def getArriveCommList(status):
         data.append(product_data)
     return jsonify({"data":data})
 
-@warehouse_page.route("/warehouse/updateStatus/<status>/<id>",methods=["get"])
-def wareHouseUpdateStatus(status,id):
+# @warehouse_page.route("/warehouse/updateStatus/<status>/<id>",methods=["get"])
+# def wareHouseUpdateStatus(status,id):
+#     product = Product.query.get(id)
+#     product.status=status
+#     db.session.commit()
+#     return "1"
+
+@warehouse_page.route("/warehouse/getInfo/<id>",methods=["POST"])
+def commoditiesGetInfo(id):
+    # print('id: ',id)
     product = Product.query.get(id)
-    product.status=status
+    # print(product)
+    product_data = {
+        "id": product.id,
+        "product_name": product.product_name,
+        "status": product.status,
+        "number": product.number,
+        "date_of_pro": product.date_of_pro,
+        "description": product.description
+    }
+    return jsonify({"product": product_data})
+
+@warehouse_page.route("/warehouse/updateInfo/<id>",methods=["POST"])
+def commoditiesUpdateInfo(id):
+    id = request.form.get('id')
+    product_name = request.form.get('product_name')
+    product_num = request.form.get('product_num')
+    product_description = request.form.get('product_description')
+    product_status = request.form.get('product_status')
+
+    if (product_name == "")| (product_num == ""):
+        return '0_1'
+    if Product.query.filter(Product.product_name == product_name, Product.id != id).first():
+        return '0_2'
+
+    product = Product.query.get(id)
+    product.product_name = product_name
+    product.status = product_status
+    product.number = product_num
+    product.description = product_description
+
     db.session.commit()
-    return "1"
+    return '1'
 
 @warehouse_page.route("/warehouse/searchByCondition/<status>/<productId>")
 def searchCommodityByCondition(status,productId):

@@ -38,7 +38,7 @@ $(function  () {
                                         "<td>"+response.data[i].description+"</td>"+
 
 									"<td>"+
-									          "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus1.html?id="+response.data[i].id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+									          "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'commodities_UpdateStatus.html?id="+response.data[i].id+"', 1000, 500)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
 									"<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this,"+response.data[i].id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"	+
 									"</td>"+
 								"</tr>";
@@ -72,7 +72,7 @@ $('#search').click(function(){
                     "\t\t\t\t\t\t\t\t\t<td>"+data.product.date_of_pro+"</td>\n" +
                     "\t\t\t\t\t\t\t\t\t<td>"+data.product.description+"</td>\n" +
                     "\t\t\t\t\t\t\t\t\t<td>\n" +
-                    "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'warehouseUpdateStatus1.html?id="+data.product.id+"', 1000, 300)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'commodities_UpdateStatus.html?id="+data.product.id+"', 1000, 500)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
                     "\t\t\t\t\t\t\t\t\t\t<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this,"+data.product.id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>\n" +
                     "\t\t\t\t\t\t\t\t\t</td>\n" +
                     "\t\t\t\t\t\t\t\t</tr>"

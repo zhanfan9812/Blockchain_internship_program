@@ -1,15 +1,9 @@
-$(function () {
-      var url = decodeURI(window.location.href);
-    /* 得到id*/
-    var status = url.split("=")[1];
+function makeHtml(data,status){
     var A=["0","生产中","待运输","运输中","已到达","已入库"];
-   $.ajax({
-       url:"/getArriveCommList/"+status,
-       success:function (data) {
-//          alert(status)
-          var html = "";
+    alert(A[status])
+    var html = "";
           for (var i = 0;i<data.data.length;i++){
-              var j = i+1;
+             var j = i+1;
               html += "<tr>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+j+"</td>\n" +
                   "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].id+"</td>\n" +
@@ -22,12 +16,18 @@ $(function () {
                   "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'commodities_UpdateStatus.html?id="+data.data[i].id+"', 1000, 500)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>编辑</a>\n" +
                   "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('更新商品状态', 'commodities_UpdateStatus.html?id="+data.data[i].id+"', 1000, 500)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>物流二维码</a>\n" +
                   "\t\t\t\t\t\t\t\t\t</td>\n" +
-                  "\t\t\t\t\t\t\t\t</tr>"
+                  "\t\t\t\t\t\t\t\t</tr>";
           }
-          $("tbody").append(html);
-       }
-   })
-
+          return html;
+}
+$(function () {
+      var url = decodeURI(window.location.href);
+    /* 得到id*/
+    var status = url.split("=")[1];
+    var limit = 5;
+    var count = getCount("/warehouse/getCount",status);//数据总条数
+    /*分页注册*/
+    showPage("layuipage",count,limit,"/warehouse/getProductsByPage",status)
     $("#searchCommodityInwareHouse").click(function () {
         var productId = $("#productId").val();
         if (productId == null || productId ==""){

@@ -64,7 +64,9 @@ def commoditiesUpdateInfo(id):
     product.description = product_description
 
     db.session.commit()
-    return '1'
+    #更新数据库的block_info
+    return "1"
+
 
 @warehouse_page.route("/warehouse/searchByCondition/<status>/<productId>")
 def searchCommodityByCondition(status,productId):
@@ -85,3 +87,27 @@ def searchCommodityByCondition(status,productId):
             "description": product.description
         }
         return jsonify({"product":product_data})
+
+#得到总数据
+@warehouse_page.route("/warehouse/getCount/<status>")
+def getCount(status):
+    count = Product.query.filter(Product.status==status).count()
+    return str(count)
+
+@warehouse_page.route("/warehouse/getProductsByPage/<status>/<curr>/<limit>")
+def getProductsByPage(status,curr,limit):
+    curr = int(curr)
+    limit = int(limit)
+    products = Product.query.filter(Product.status == status).offset((curr-1)*limit).limit(limit)
+    data = []
+    for product in products:
+        product_data = {
+            "id": product.id,
+            "product_name": product.product_name,
+            "status": product.status,
+            "number": product.number,
+            "date_of_pro": product.date_of_pro,
+            "description": product.description
+        }
+        data.append(product_data)
+    return jsonify({"data": data})

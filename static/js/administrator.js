@@ -52,7 +52,7 @@ $(function  () {
         var password = $('#password_input').val();
         var email = $('#email_input').val();
         var gender = $('#gender_input').val();
-        var role_input =  arr[$("#role_input").val()];
+        var role_input = $("#role_input").val();
         $.ajax({
             url:'/update_id',
             method:'POST',
@@ -147,7 +147,7 @@ $(function  () {
                                     "<td>"+response.email+"</td>"+
                                     "<td>"+sex[response.gender]+"</td>"+
                                     "<td>"+
-									    "<a class='layui-btn layui-btn-sm layui-btn-normal' title='编辑' onclick='execute_open(\"编辑角色\", \"role_update.html?id="+response.data[i].id+"\", 1000, 500)' href=\"javascript:;\"><i class='layui-icon layui-icon-edit'></i>编辑</a>"	+
+									    "<a class='layui-btn layui-btn-sm layui-btn-normal' title='编辑' onclick='execute_open(\"编辑角色\", \"role_update.html?id="+response.id+"\", 1000, 500)' href=\"javascript:;\"><i class='layui-icon layui-icon-edit'></i>编辑</a>"	+
 									    "<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this, "+response.id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"	+
 									"</td>"+
 								"</tr>";

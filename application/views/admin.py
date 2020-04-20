@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, session, redirect, request, url_fo
 from application.extension import db
 from flask import jsonify
 from application.models import User
-import  json
 
 admin_page = Blueprint('admin_page', __name__)
 
@@ -50,20 +49,17 @@ def delete_id():
 
 @admin_page.route('/add',methods=["POST"])
 def add():
-    print("123213123123123")
     username = request.form.get('username')
     password = request.form.get('password')
     email = request.form.get('email')
     gender = request.form.get('gender')
     role = request.form.get('role')
-    if (username == "")| (password == "") | (role == ""):
+    if (username == "")| (password == "") | (email == ""):
         return '0_1'
     if User.query.filter(User.username == username).first():
         return '0_2'
     if User.query.filter(User.email == email).first():
         return '0_3'
-    if not ((role == "1")| (role == "2") | (role == "3") | (role == "4")):
-        return '0_4'
     user = User(username=username, password=password, email=email, gender=gender, role=role)
     db.session.add(user)
     db.session.commit()
@@ -78,9 +74,9 @@ def update_id():
     role = request.form.get('role')
     id = request.form.get('id')
 
-    if (username == "")| (password == "") | (role == ""):
+    if (username == "")| (password == "") | (email == ""):
         return '0_1'
-    if User.query.filter(User.username == username).first():
+    if User.query.filter(User.username == username,User.id != id).first():
         return '0_2'
     if User.query.filter(User.email == email,User.id != id).first():
         return '0_3'
@@ -93,3 +89,33 @@ def update_id():
 
     db.session.commit()
     return '1'
+
+@admin_page.route('/update_personal',methods=["POST"])
+def update_personal():
+    password = request.form.get('password')
+    email = request.form.get('email')
+    gender = request.form.get('gender')
+    id = request.form.get('id')
+    if  (password == "") | (email == ""):
+        return '0_1'
+    if User.query.filter(User.email == email,User.id != id).first():
+        return '0_3'
+    user = User.query.get(id)
+    user.password = password
+    user.email = email
+    user.gender = gender
+    db.session.commit()
+    return '1'
+
+@admin_page.route('/getinfo',methods=["POST"])
+def getinfo():
+    id = request.form.get('id')
+    user = User.query.filter(User.id == id).first()
+    data = {
+        'username': user.username,
+        'role': user.role,
+        'email': user.email,
+        'password': user.password,
+        'gender': user.gender
+    }
+    return jsonify(data)

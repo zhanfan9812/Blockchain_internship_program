@@ -10,7 +10,7 @@ def to_login(page):
 @user_page.route('/users')
 def users():
     if session.get('user_id'):
-        return render_template('/index.html',role=session.get('user_role') ,username=session.get('user_name'))
+        return render_template('/index.html',role=session.get('user_role') ,username=session.get('user_name') ,id=session.get('user_id'))
     else:
         return redirect('/')
 

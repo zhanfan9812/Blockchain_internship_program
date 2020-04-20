@@ -15,23 +15,20 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">用户名</label>
 						<div class="layui-input-inline layer-inputs">
-							<input type="text" value="" id="username_input"  placeholder="请输入用户名称" class="layui-input">
+							<input type="text" value="" readonly="readonly" id="username_input"  placeholder="请输入用户名称" class="layui-input">
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入用户名</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">密码</label>
 						<div class="layui-input-inline layer-inputs">
 							<input type="text" value="" id="password_input"  placeholder="请输入密码" class="layui-input">
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入密码</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">邮箱</label>
 						<div class="layui-input-inline layer-inputs">
 							<input type="text" value="" id="email_input"  placeholder="请输入邮箱" class="layui-input">
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入邮箱</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">性别</label>
@@ -41,30 +38,24 @@
 								<option value="2">女</option>
 							</select>
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入性别</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">类别</label>
 						<div class="layui-input-inline layer-inputs">
-							<select  id="role_input"  style="width: 190px;height: 40px">
-								<option value="1" selected="selected">生产厂商</option>
-								<option value="2">物流人员</option>
-								<option value="3">仓库管理人员</option>
-								<option value="4">管理员</option>
-							</select>
+							<input type="text" value="" readonly="readonly" id="role_input"  placeholder="请输入类别" class="layui-input">
 						</div>
-						<div class="layui-form-mid layui-word-aux">请输入类别</div>
 					</div>
 					<div class="layui-form2-item" style="margin-left: 50px;">
 						<!--<input type="hidden" name="id" id="id" value="">-->
 						<!--<input type="hidden" name="operation_url" id="operation_url" value="{:url('IstratorRole/operation')}">-->
-						<a  href="javascript:;" class="layui-btn" id="save" ><i class="layui-icon layui-icon-form"></i>保存</a>
+						<a  href="javascript:;" class="layui-btn" id="update_personal" ><i class="layui-icon layui-icon-form"></i>修改</a>
 					</div>
 			</div>
-		</div>	
+		</div>
     </body>
 </html>
 <script src="../static/js/jquery-3.4.1.min.js"></script>
 <script src="../static/lib/layui/layui.js"></script>
 <script src="../static/js/admin.js"></script>
 <script src="../static/js/administrator.js"></script>
+<script src="../static/js/info_load.js"></script>

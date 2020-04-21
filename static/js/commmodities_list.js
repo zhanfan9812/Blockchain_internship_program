@@ -20,6 +20,7 @@ function makeHtml(data,status){
           return html;
 }
 $(function () {
+        var A=["0","生产中","待运输","运输中","已到达","已入库"];
       var url = decodeURI(window.location.href);
     /* 得到id*/
     var status = url.split("=")[1];

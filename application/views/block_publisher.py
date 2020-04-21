@@ -3,6 +3,7 @@ import zmq
 import json
 import os
 import threading
+from flask import session
 
 _basepath = os.path.abspath(os.path.dirname(__file__))
 conf = {}
@@ -13,9 +14,9 @@ conf['write_port'] = '5557'             #write_port
 
 class Block:
 
-    def __init__(self, index, transactions, previous_hash):
+    def __init__(self, index, product_data, previous_hash):
         self.index = index
-        self.transactions = transactions
+        self.product_data = product_data
         #self.timestamp = timestamp
         self.previous_hash = previous_hash
         self.nonce = 0
@@ -39,7 +40,7 @@ class publisher:
         i = 0
         while True:
             publisher.send_multipart([b'new_block', bytes(block_string,'utf-8')])
-            time.sleep(2)
+            time.sleep(1)
             print('publish_newblock',i)
             i+=1
             if i==3:
@@ -59,13 +60,15 @@ class publisher:
         i = 0
         while True:
             publisher.send_multipart([b'write_block', bytes(block_string,'utf-8')])
-            time.sleep(2)
+            time.sleep(1)
             print('publish_write_newblock', i)
-            write_blockfile(bytes(block_string,'utf-8'))
             i+=1
             if i==3:
                 break
 
+        write_blockfile(bytes(block_string, 'utf-8'))
+        # session['logistic'] = (bytes(block_string, 'utf-8'))
+        # update_db(bytes(block_string, 'utf-8'))
         publisher.close()
         context.term()
 
@@ -95,14 +98,32 @@ def write_blockfile(data):
     obj_data = json.loads(data.decode(encoding="utf-8"))
     #print('the file ==================',obj_data," and index is ",json.dumps(obj_data,indent=2,ensure_ascii=False))
     with open(_basepath+'\\pubBlock'+str(obj_data['index'])+'.txt', 'w',encoding="utf-8") as f:
-        f.write(json.dumps(obj_data,indent=2,ensure_ascii=False))
+        # f.write(json.dumps(obj_data,indent=2,ensure_ascii=False))
+        f.write(json.dumps(obj_data, ensure_ascii=False))
 
-if __name__ == '__main__':
-    block = Block(1, 'transaction', 'pre_hash')
+# def update_db(data):
+#     obj_data = json.loads(data.decode(encoding="utf-8"))
+#     product_data=obj_data['product_data']
+#     temp = product_data.split('\n')
+#     temp1 = temp[0].split(' ')
+#     product_name = temp1[1]
+#     index = obj_data['index']
+#     random_num = obj_data['nonce']
+#     current_hash = obj_data['now_hash']
+#     pre_hash = obj_data['previous_hash']
+#
+#     logistic = Logistic.query.filter(Logistic.chain_index == index, Logistic.product_name == product_name).first()
+#     # logistic.current_hash = current_hash
+#     # logistic.random_num = random_num
+#     # logistic.pre_hash = pre_hash
+#     # db.session.commit()
+
+def add_block(index, product_data, pre_hash):
+    block = Block(index, product_data, pre_hash)
     pub = publisher(conf['private_server'], conf['port'], 'new_block')
     # pub.publish_newblock(block)
     print('Server publish_newblock port start')
-    print(type({'data': block}))
+    # print(type({'data': block}))
     _pub_thread = threading.Thread(target=pub.publish_newblock, kwargs={'data': block})
     _pub_thread.start()
     # get finished status
@@ -110,3 +131,6 @@ if __name__ == '__main__':
     print('Server rep port start')
     _status_thread = threading.Thread(target=_status.req_rep)
     _status_thread.start()
+
+if __name__ == '__main__':
+    add_block(0,'product_data',1)

@@ -47,19 +47,22 @@ class Logistic(db.Model):
     __tablename__ = 'logistics'
 
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.Integer, nullable=False)  #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
+    product_status = db.Column(db.Integer, nullable=False)  #1:生产中 2:待运输 3：运输中 4：已到达 5：已入库
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    product_number = db.Column(db.Integer, nullable=False)
     operator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    random_num = db.Column(db.Integer)
-    current_hash = db.Column(db.String(200))
-    pre_hash = db.Column(db.String(200))
+    random_num = db.Column(db.Integer)              #add_block 中添加
+    current_hash = db.Column(db.String(200))        #add_block 中添加
+    pre_hash = db.Column(db.String(200))            #add_block 中添加
     chain_index = db.Column(db.Integer)
-    description = db.Column(db.Text)
     update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, product_id, status):
+    def __init__(self, product_status, product_id, product_number, operator_id,  chain_index):
+        self.product_status = product_status
         self.product_id = product_id
-        self.status = status
+        self.product_number = product_number
+        self.operator_id = operator_id
+        self.chain_index = chain_index
 
     def __repr__(self):
         return '<Logistic id:%r status:%s product_id:%s>' % (self.id, self.status, self.product_id)

@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, session, redirect, request,jsonify,url_for, flash
-from application.models import Product
+from application.models import Product,Logistic
 from application.extension import db
+from application.views.block_publisher import add_block
 import time
+import os.path
 import json
 
 producer_page = Blueprint('producer_page', __name__)
@@ -16,8 +18,29 @@ def additem(productNum,productName,productDescription):
         return '0_2'
     if Product.query.filter(Product.product_name == productName).first():
         return '0_3'
-    item=Product(product_name=productName,status=1,number=productNum,description=productDescription)
+    item = Product(product_name=productName,status=1,number=productNum,description=productDescription)
     db.session.add(item)
+    db.session.commit()
+    product = Product.query.filter(Product.product_name == productName).first()
+    product_id = product.id
+    logistic = Logistic(product_status=1, product_id= product_id,product_number=productNum,operator_id=session.get('user_id'),chain_index=0)
+    product_data = 'product_name: '+productName+'\nproduct_number: '+productNum+'\nproduct_status: 1'+'\nproduct_description: '+productDescription+'\nupdate_time: '+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    # print(product_data)
+    add_block(0, product_data, '0')
+    block_path='D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock0.txt'
+    while not os.path.exists(block_path):
+        print('computing hash')
+        time.sleep(1)
+    with open(block_path, 'r') as f:
+        print("Load str file from {}".format(block_path))
+        logistic_info = json.load(f)
+    os.remove(block_path)
+    logistic.pre_hash = logistic_info['previous_hash']
+    logistic.current_hash = logistic_info['now_hash']
+    logistic.random_num = logistic_info['nonce']
+    db.session.add(logistic)
+    block_info = 'chain_index: 0\nproduct_id: '+str(product_id)+'\noperator_id: '+'\n'+str(session.get('user_id'))+product_data+'\nprevious_hash: '+logistic_info['previous_hash']+'\ncurrent_hash: '+logistic_info['now_hash']+'\nnonce: '+str(logistic_info['nonce'])
+    product.block_info = block_info
     db.session.commit()
     return '1'
 
@@ -25,8 +48,12 @@ def additem(productNum,productName,productDescription):
 @producer_page.route('/producers/deleteitem', methods=["GET","POST"])
 def deleteitem():
     id = request.form.get('productId')
-    item=Product.query.get(id)
+    logistics=Logistic.query.filter(Logistic.product_id == id).all()
     # print(item)
+    for logistic in logistics:
+        db.session.delete(logistic)
+    db.session.commit()
+    item = Product.query.get(id)
     if(item is None):
         return "1"
     db.session.delete(item)

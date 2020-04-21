@@ -33,7 +33,7 @@ class subscriber:
             print("从发布者处收到的信息: [%s] %s" % (address, contents))
             compute_hash(contents)
             # 接收一次发布者的new_block消息后关闭端口，防止重复接受并计算hash，如果要一直开着此端口，也可以注释掉
-            break;
+            # break
 
         subscriber.close()
         context.term()
@@ -50,8 +50,9 @@ class subscriber:
             [address, contents] = subscriber.recv_multipart()
             print("将要写入文件的信息: [%s] %s" % (address, contents))
             write_blockfile(contents)
-            subscriber.close()
+            # break
 
+        subscriber.close()
         context.term()
 
 
@@ -74,6 +75,7 @@ def compute_hash(data):
 
     #send signal of status,FIFO
     #time.sleep(10)
+    block_object['now_hash'] = computed_hash
     print('Miner req port start')
     send_finish_status(block_object)
 

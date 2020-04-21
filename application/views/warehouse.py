@@ -6,6 +6,9 @@ from application.views.block_publisher import add_block
 import time
 import os.path
 import json
+import base64
+import io
+import qrcode
 
 warehouse_page = Blueprint("warehouse_page",__name__)
 
@@ -70,18 +73,27 @@ def commoditiesUpdateInfo(id):
     # db.session.commit()
     #更新数据库的block_info
     status_rename = ["0","生产中状态","待运输状态","运输中状态","已到达状态","已入库状态"]
-    chain_index = int(product_status)-1
+    # chain_index = int(product_status)-1
+    logistics = Logistic.query.filter(Logistic.product_id == id).all()
+    chain_index = 0
+    pre_logistic = logistics[0]
+    for log in logistics:
+        if log.chain_index>chain_index:
+            pre_logistic = log
+            chain_index = log.chain_index
+    chain_index += 1
+    print(chain_index,pre_logistic)
     logistic = Logistic(product_status=product_status, product_id=id, product_number=product_num,
                         operator_id=session.get('user_id'), chain_index=chain_index)
     product_data = '商品名称: ' + product_name + '\n商品数量: ' + product_num + '\n商品状态: '+status_rename[int(product_status)]+ '\n商品描述: ' +\
                    product_description + '\n操作时间: ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-    pre_logistic = Logistic.query.filter(Logistic.product_id == id,Logistic.chain_index == (chain_index-1)).first()
+    # pre_logistic = Logistic.query.filter(Logistic.product_id == id,Logistic.chain_index == (chain_index-1)).first()
     print(pre_logistic)
     pre_hash = pre_logistic.current_hash
     add_block(chain_index, product_data, pre_hash)
     block_path = 'D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock.txt'
     while not os.path.exists(block_path):
-        print('computing hash')
+        print('waiting reply')
         time.sleep(1)
     with open(block_path, 'r', encoding='UTF-8') as f:
         print("Load str file from {}".format(block_path))
@@ -96,6 +108,26 @@ def commoditiesUpdateInfo(id):
                      'previous_hash'] + '\n当前hash: ' + logistic_info['now_hash'] + '\n随机数: ' + str(
         logistic_info['nonce'])
     product.block_info += block_info
+    #生成二维码
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=2,
+        border=1,
+    )
+    qr.make(fit=True)
+    qr.add_data(product.block_info)
+    # print('qr_code的txt: ',block_info)
+    img = qr.make_image()
+
+    buf = io.BytesIO()
+    img.save(buf, format='PNG')
+    image_stream = buf.getvalue()
+    heximage = base64.b64encode(image_stream)
+    qr_code = 'data:image/png;base64,' + heximage.decode()
+    # print(qr_code)
+    product.qr_code = qr_code
+
     db.session.commit()
     return "1"
 

@@ -7,35 +7,36 @@
     <script src="../static/js/qrcode.min.js"></script>
 </head>
 <body>
-    <div id="qrcode"></div>
-    <script type="text/javascript">
-    function utf16to8(str) {
-        var out, i, len, c;
-        out = "";
-        len = str.length;
-        for(i = 0; i < len; i++) {
-        c = str.charCodeAt(i);
-        if ((c >= 0x0001) && (c <= 0x007F)) {
-            out += str.charAt(i);
-        } else if (c > 0x07FF) {
-            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
-            out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
-            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-        } else {
-            out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
-            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-        }
-        }
-        return out;
-    }
-    var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "你好",
-        width: 128,
-        height: 128,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
-    </script>
+    <!--<div id="qrcode"></div>-->
+    <!--<script type="text/javascript">-->
+    <!--function utf16to8(str) {-->
+        <!--var out, i, len, c;-->
+        <!--out = "";-->
+        <!--len = str.length;-->
+        <!--for(i = 0; i < len; i++) {-->
+        <!--c = str.charCodeAt(i);-->
+        <!--if ((c >= 0x0001) && (c <= 0x007F)) {-->
+            <!--out += str.charAt(i);-->
+        <!--} else if (c > 0x07FF) {-->
+            <!--out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));-->
+            <!--out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));-->
+            <!--out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));-->
+        <!--} else {-->
+            <!--out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));-->
+            <!--out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));-->
+        <!--}-->
+        <!--}-->
+        <!--return out;-->
+    <!--}-->
+    <!--var qrcode = new QRCode(document.getElementById("qrcode"), {-->
+        <!--text: "你好",-->
+        <!--width: 128,-->
+        <!--height: 128,-->
+        <!--colorDark : "#000000",-->
+        <!--colorLight : "#ffffff",-->
+        <!--correctLevel : QRCode.CorrectLevel.H-->
+    <!--});-->
+    <!--</script>-->
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuAQAAAACHdwtDAAAFBElEQVR4nJVXsaqeyQ3VvXLzwwS5DaQJBNzKyGACY+aC24W8RCBVYB8ikHYh7b7EgiGVQUYuZXTBVeBCmm0X5qILJqAf5QGycyFfORwOR2dGR59uGn7lu97+2ikAKGxjAJktRkSg6g7jhI5SEKLoZIw5EEJn+wntI0cTp+qyHmsIz9IT+hbgnu/3w92Az3cv7fHDj/H1DuAZ7h5GilJhigTNZ26Isg7dZI7M5NDbzrpv9M7/5/DN0ZPuHludDHpWWI/o1XXk/g5/efuvn1+C4uUJvoP9/ssruJy4d+Zaa4xFE7U0ZJuuo+56M/4+4K9P+nXeP13+cv33z5evj/PEbTE7AKB8d8zMFeX7WOUG5lG9UhQ7kZxt5zOerNCY4L4K5jSuhXTyBPaA1EzDxRaB2h2RR9178cTUru4dM9ERkY43n7A41YxpDWGtpQ3jyB0rOMVn6eYpC/bE1nM3qGhWuJgyTaUlA/2oZDeJd8DOXdKSgbzkhH4Bv/nDA9xfDb58//D0+Yffvvrl63g8dwP5Bsr2GauGoFf3Pnuyp+7lxQ1cGdtT8ux3B40tPhCHiXMz4IyjJwU12ATEqmmUBynO8xsUjTW8i2XQjBDTlPM7AZIyVIxpyZG+lO2oxGiaN87J1LmIesYcR24F0kEM5GYEw3YugCO6w1BykueUDOshHX5C3366Xv/zw0u8fvuC4+Hd5dO3y6frt7sjN6lyCoWuCLIaQ0iPSkqBIhyQjQQINhOMoyeatXAl9J5hXUGehM944lRgQ6U2s67iKXLuy+CBoh04BFf4yEl8zhPfu0M5l9tSWyUGduTW5IVzaalMLU8o7mPvQFeJtiMnhYl5SziedeM28Y5UXkneLoXnmbbdJGLWothGOZfOgLOSBrG9UNRi7Noc2869Y2qcyRo491pIC2LWEZ2SLcPG0ok5LA2Knukdnh0VsNgmeBI3PZPfSqOhcm7q5bgFvJmPVerG1mWbwFULV6btOqdPQmG62phgna0J5OeEGHMVLQHtkt3UFLrOVZJnbY0pgoBKykj5zGww4cUFu4PGNDGZ5xwMIuzs2mKrt7aK7nn2RGELOoxAI6COnnB+J05OPCAMU4wsRjTpScktXp/4xw/7evXLuFzh9T9//+kj6Al9RXiEu/v3BG+/PNml3hG+H8dJsgFAqwBMF8MYSfxMDm6UYoUpJh7AujTDjlWWF1ovjj1tpJV3yfkuO6NnQuTgjQhJGHLu+azRHVTSapJKxbzPaEdrEvEBa3rR5qJndcOcmcBUks2xtvg5B7NNIvdymVssbJiv8//JnjkBkpTmpiW9wOU8uVtQRFxKTYAKYfGyc35PkgUx0bpi4lgVOo9oIwTZnWsMXkFzYMFxpsGeWEop7VzEEZlEeUbntNk8difGJNxM44y2AdN2iDmZcsXQ3udEtlaETYNc9zC0blx9zpMNMahNuclKzZZmnJS8uPzJ/yw/3awrveG7+bcr3MPg8y7ljC1pa/BUbphlk57L77k4Z6+MDKxlM89zPspiicMIJFdo8wF44r5puH89n/DhA7zzV7/7+OqCL/y4A95+ugH/HNcrXPLb5ePT5e3NH6/AJ0+o4N5exz28Xtd/vP/p2zUf4PH4N+PDyTWUGCMV0AbD2RMfPgcXTZsIoTV2rvNW58NrYnQWYXpJps/zlIoyDtkrVXagJa0J5yml4DKDJBbESh4FWMdN4Ob/2rn/CyeIvT8ayGsLAAAAAElFTkSuQmCC"/>
 </body>
 </html>

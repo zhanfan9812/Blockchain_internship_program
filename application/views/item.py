@@ -5,6 +5,9 @@ from application.views.block_publisher import add_block
 import time
 import os.path
 import json
+import base64
+import io
+import qrcode
 
 producer_page = Blueprint('producer_page', __name__)
 
@@ -32,7 +35,7 @@ def additem(productNum,productName,productDescription):
     add_block(0, product_data, '0')
     block_path='D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock.txt'
     while not os.path.exists(block_path):
-        print('computing hash')
+        print('waiting reply')
         time.sleep(1)
     with open(block_path, 'r', encoding='UTF-8') as f:
         print("Load str file from {}".format(block_path))
@@ -48,6 +51,24 @@ def additem(productNum,productName,productDescription):
                      'previous_hash'] + '\n当前hash: ' + logistic_info['now_hash'] + '\n随机数: ' + str(
         logistic_info['nonce'])
     product.block_info = block_info
+    # 生成二维码
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=2,
+        border=1,
+    )
+    qr.make(fit=True)
+    qr.add_data(block_info)
+    img = qr.make_image()
+
+    buf = io.BytesIO()
+    img.save(buf, format='PNG')
+    image_stream = buf.getvalue()
+    heximage = base64.b64encode(image_stream)
+    qr_code = 'data:image/png;base64,' + heximage.decode()
+    # print(qr_code)
+    product.qr_code = qr_code
     db.session.commit()
     return '1'
 

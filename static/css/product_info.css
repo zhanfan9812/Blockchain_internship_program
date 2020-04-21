@@ -1,0 +1,11 @@
+#productInfo .product_head{
+    float: left;
+    margin-left: 50px;
+}
+td{
+    border:1px solid;
+    text-align: center;
+}
+thead{
+    text-align: center;
+}

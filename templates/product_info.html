@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>后台管理</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../static/lib/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../static/css/admin.css" media="all">
+		<link rel="stylesheet" href="../static/css/product_info.css">
+	</head>
+	<body>
+        <div class="layui-fluid" id="productInfo">
+               <div class="product_head"><img id="qr_code" src=""></div>
+				<div class="product_head">
+					名称：<span id="productName"></span> <br>
+					数量：<span id="productNum"></span> <br>
+					当前状态：<span id="productStatus"></span> <br>
+					描述：<span id="productScri"></span> <br>
+					生产时间：<span id="productCreaTime"></span> <br>
+				</div>
+				<hr>`
+				<div>
+					<table class="layui-table">
+						<thead>
+						<td>区块编号</td>
+						<td>商品ID</td>
+						<td>操作者ID</td>
+						<td>商品名称</td>
+						<td>商品数量</td>
+						<td>商品状态</td>
+						<td>商品描述</td>
+						<td>操作时间</td>
+						<td>上一个区块hash</td>
+						<td>当前hash</td>
+						<td>随机数</td>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+			</div>
+		</div>
+    </body>
+</html>
+<script src="../static/js/jquery-3.4.1.min.js"></script>
+<script src="../static/lib/layui/layui.js"></script>
+<script src="../static/js/admin.js"></script>
+<script src="../static/js/product_info.js"></script>

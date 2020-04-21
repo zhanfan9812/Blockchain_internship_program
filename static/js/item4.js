@@ -22,7 +22,6 @@ $(function  () {
     var status = 5;
     var limit = 5;
     var count = getCount("/products/getCount",status);//数据总条数
-    alert(count)
     /*分页注册*/
     showPage("layuipage",count,limit,"/products/getProductsByPage",status)
 

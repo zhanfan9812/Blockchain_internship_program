@@ -111,3 +111,19 @@ def getProductsByPage(status,curr,limit):
         }
         data.append(product_data)
     return jsonify({"data": data})
+
+@warehouse_page.route("/product/getProductInfo/<id>",methods=['GET', 'post'])
+def getProductInfo(id):
+    id = int(id)
+    product = Product.query.get(id)
+    product_data = {
+        "id": product.id,
+        "product_name": product.product_name,
+        "status": product.status,
+        "number": product.number,
+        "date_of_pro": product.date_of_pro,
+        "description": product.description,
+        "block_info":product.block_info,
+        "qr_code":product.qr_code
+    }
+    return jsonify({"data" : product_data})

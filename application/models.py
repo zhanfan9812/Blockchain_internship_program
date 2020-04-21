@@ -32,6 +32,7 @@ class Product(db.Model):
     date_of_pro = db.Column(db.DateTime, nullable=False, default=datetime.now)
     description = db.Column(db.Text)
     block_info = db.Column(db.Text)
+    qr_code = db.Column(db.Text)
 
     def __init__(self, product_name, status, number, description):
         self.product_name = product_name

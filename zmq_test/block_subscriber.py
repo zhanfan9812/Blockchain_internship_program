@@ -3,7 +3,7 @@ import threading
 import json
 from hashlib import sha256
 import os
-
+import time
 
 _basepath = os.path.abspath(os.path.dirname(__file__))
 conf = {}
@@ -32,6 +32,7 @@ class subscriber:
             # print('subscriber.recv_multipart():',subscriber.recv_multipart())
             print("从发布者处收到的信息: [%s] %s" % (address, contents))
             compute_hash(contents)
+            time.sleep(10)
             # 接收一次发布者的new_block消息后关闭端口，防止重复接受并计算hash，如果要一直开着此端口，也可以注释掉
             # break
 

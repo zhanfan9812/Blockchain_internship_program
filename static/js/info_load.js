@@ -11,7 +11,7 @@ $(function  () {
             data:{id:update_id},
             success:function(response){
                 $('#username_input').val(response.username);
-                $('#password_input').val(response.password);
+                $('#password_input').val("");
                 $('#email_input').val(response.email);
                 $('#gender_input').val(response.gender);
                 $("#role_input").val(response.role);
@@ -27,7 +27,6 @@ $(function  () {
             data:{id:update_id},
             success:function(response){
                 $('#username_input').val(response.username);
-                $('#password_input').val(response.password);
                 $('#email_input').val(response.email);
                 $('#gender_input').val(response.gender);
                 $("#role_input").val(B[response.role]);

@@ -58,11 +58,15 @@ $(function  () {
     {
         var update_id = url.split('=')[1]
     }
-    var sex=["0","男","女"];
+    if(role != null && role !=""){
     var limit = 5;
     var count = getCount("/role/getCountByRole",role);//数据总条数
     /*分页注册*/
     showPage("layuipage",count,limit,"/role/getRoleByRolePage",role)
+    }
+
+    var sex=["0","男","女"];
+
     /* update by id*/
     $('#update_id').click(function(){
         var username = $('#username_input').val();
@@ -70,6 +74,7 @@ $(function  () {
         var email = $('#email_input').val();
         var gender = $('#gender_input').val();
         var role_input = $("#role_input").val();
+
         $.ajax({
             url:'/update_id',
             method:'POST',
@@ -94,14 +99,13 @@ $(function  () {
 
      /* 修改个人信息*/
     $('#update_personal').click(function(){
-        var password = $('#password_input').val();
         var email = $('#email_input').val();
         var gender = $('#gender_input').val();
         $.ajax({
             url:'/update_personal',
             method:'POST',
             async : false,
-            data:{password:password,email:email,gender:gender,id:update_id},
+            data:{email:email,gender:gender,id:update_id},
             success:function(response){
                 if(response=='1'){
                     alert('修改成功');

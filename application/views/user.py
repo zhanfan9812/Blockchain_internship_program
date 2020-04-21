@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
 from application.models import User
+from werkzeug.security import generate_password_hash ,check_password_hash
 
 user_page = Blueprint('user_page', __name__)
 
@@ -29,7 +30,7 @@ def login():
         print('name:',name,'pwd:',pwd)
         print(user)
         # print('user.password:', user.password)
-        if user and user.password == pwd:
+        if user and check_password_hash(user.password, pwd):
             session['user_id'] = user.id
             session['user_role'] = user.role
             session['user_name'] = user.username

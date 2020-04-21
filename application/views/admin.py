@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, session, redirect, request, url_fo
 from application.extension import db
 from flask import jsonify
 from application.models import User
+from werkzeug.security import generate_password_hash ,check_password_hash
 
 admin_page = Blueprint('admin_page', __name__)
 
@@ -54,13 +55,13 @@ def add():
     email = request.form.get('email')
     gender = request.form.get('gender')
     role = request.form.get('role')
-    if (username == "")| (password == "") | (email == ""):
+    if (username == "")| (password=="") | (email == ""):
         return '0_1'
     if User.query.filter(User.username == username).first():
         return '0_2'
     if User.query.filter(User.email == email).first():
         return '0_3'
-    user = User(username=username, password=password, email=email, gender=gender, role=role)
+    user = User(username=username, password=generate_password_hash(password), email=email, gender=gender, role=role)
     db.session.add(user)
     db.session.commit()
     return '1'
@@ -74,7 +75,7 @@ def update_id():
     role = request.form.get('role')
     id = request.form.get('id')
 
-    if (username == "")| (password == "") | (email == ""):
+    if (username == "") | (email == ""):
         return '0_1'
     if User.query.filter(User.username == username,User.id != id).first():
         return '0_2'
@@ -82,7 +83,8 @@ def update_id():
         return '0_3'
     user = User.query.get(id)
     user.username = username
-    user.password = password
+    if  password:
+        user.password = generate_password_hash(password)
     user.email = email
     user.gender = gender
     user.role = role
@@ -92,16 +94,14 @@ def update_id():
 
 @admin_page.route('/update_personal',methods=["POST"])
 def update_personal():
-    password = request.form.get('password')
     email = request.form.get('email')
     gender = request.form.get('gender')
     id = request.form.get('id')
-    if  (password == "") | (email == ""):
+    if  (email == ""):
         return '0_1'
     if User.query.filter(User.email == email,User.id != id).first():
         return '0_3'
     user = User.query.get(id)
-    user.password = password
     user.email = email
     user.gender = gender
     db.session.commit()
@@ -115,10 +115,11 @@ def getinfo():
         'username': user.username,
         'role': user.role,
         'email': user.email,
-        'password': user.password,
+        # 'password': user.password,
         'gender': user.gender
     }
     return jsonify(data)
+
 
 @admin_page.route("/role/getCountByRole/<role>")
 def getCountByRole(role):
@@ -142,3 +143,18 @@ def getRoleByRolePage(role,curr,limit):
         }
         data.append(user_dict)
     return jsonify({"data": data})
+
+@admin_page.route('/new_psw',methods=["POST"])
+def new_psw():
+    id = request.form.get('id')
+    psw = request.form.get('psw')
+    npsw = request.form.get('npsw')
+    if  not npsw or not psw:
+        return '0_1'
+    user = User.query.get(id)
+    if not check_password_hash(user.password,psw):
+        return '0_2'
+    user.password = generate_password_hash(npsw)
+    db.session.commit()
+    return '1'
+

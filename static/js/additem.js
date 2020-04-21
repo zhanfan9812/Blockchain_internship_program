@@ -17,6 +17,7 @@
             alert('请添加商品描述');
             return;
         }
+        alert('点击确定给商品计算区块链信息')
         $.ajax({
             url:'/producers/additem/'+num+"/"+itemName+"/"+description,
             method:'POST',

@@ -36,14 +36,14 @@ class publisher:
         publisher.bind("tcp://{}:{}".format(self.server,self.port))
 
         block_string = json.dumps(block['data'].__dict__, sort_keys=True)
-
+        print('发出的信息: ',block_string)
         i = 0
         while True:
             publisher.send_multipart([b'new_block', bytes(block_string,'utf-8')])
             time.sleep(1)
             print('publish_newblock',i)
             i+=1
-            if i==3:
+            if i==2:
                 break
 
         publisher.close()
@@ -63,7 +63,7 @@ class publisher:
             time.sleep(1)
             print('publish_write_newblock', i)
             i+=1
-            if i==3:
+            if i==2:
                 break
 
         write_blockfile(bytes(block_string, 'utf-8'))
@@ -97,28 +97,13 @@ class publisher:
 def write_blockfile(data):
     obj_data = json.loads(data.decode(encoding="utf-8"))
     #print('the file ==================',obj_data," and index is ",json.dumps(obj_data,indent=2,ensure_ascii=False))
-    with open(_basepath+'\\pubBlock'+str(obj_data['index'])+'.txt', 'w',encoding="utf-8") as f:
+    # with open(_basepath+'\\pubBlock'+str(obj_data['index'])+'.txt', 'w',encoding="utf-8") as f:
         # f.write(json.dumps(obj_data,indent=2,ensure_ascii=False))
+    with open(_basepath + '\\pubBlock.txt', 'w', encoding="utf-8") as f:
         f.write(json.dumps(obj_data, ensure_ascii=False))
 
-# def update_db(data):
-#     obj_data = json.loads(data.decode(encoding="utf-8"))
-#     product_data=obj_data['product_data']
-#     temp = product_data.split('\n')
-#     temp1 = temp[0].split(' ')
-#     product_name = temp1[1]
-#     index = obj_data['index']
-#     random_num = obj_data['nonce']
-#     current_hash = obj_data['now_hash']
-#     pre_hash = obj_data['previous_hash']
-#
-#     logistic = Logistic.query.filter(Logistic.chain_index == index, Logistic.product_name == product_name).first()
-#     # logistic.current_hash = current_hash
-#     # logistic.random_num = random_num
-#     # logistic.pre_hash = pre_hash
-#     # db.session.commit()
-
 def add_block(index, product_data, pre_hash):
+    print('收到的数据: index: ',index,'\nproduct_data: ',product_data,'\npre_hash: ',pre_hash)
     block = Block(index, product_data, pre_hash)
     pub = publisher(conf['private_server'], conf['port'], 'new_block')
     # pub.publish_newblock(block)

@@ -66,4 +66,4 @@ class Logistic(db.Model):
         self.chain_index = chain_index
 
     def __repr__(self):
-        return '<Logistic id:%r status:%s product_id:%s>' % (self.id, self.status, self.product_id)
+        return '<Logistic id:%r\n current_hash:%s\n product_id:%s>' % (self.id, self.current_hash, self.product_id)

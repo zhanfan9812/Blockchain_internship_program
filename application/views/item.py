@@ -21,17 +21,20 @@ def additem(productNum,productName,productDescription):
     item = Product(product_name=productName,status=1,number=productNum,description=productDescription)
     db.session.add(item)
     db.session.commit()
+    #上第一个区块
     product = Product.query.filter(Product.product_name == productName).first()
     product_id = product.id
     logistic = Logistic(product_status=1, product_id= product_id,product_number=productNum,operator_id=session.get('user_id'),chain_index=0)
-    product_data = 'product_name: '+productName+'\nproduct_number: '+productNum+'\nproduct_status: 1'+'\nproduct_description: '+productDescription+'\nupdate_time: '+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    # product_data = 'product_name: '+productName+'\nproduct_number: '+productNum+'\nproduct_status: 1'+'\nproduct_description: '+productDescription+'\nupdate_time: '+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    product_data = '商品名称: ' + productName + '\n商品数量: ' + productNum + '\n商品状态: 生产中状态' + '\n商品描述: ' + productDescription + '\n操作时间: ' + time.strftime(
+        '%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     # print(product_data)
     add_block(0, product_data, '0')
-    block_path='D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock0.txt'
+    block_path='D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock.txt'
     while not os.path.exists(block_path):
         print('computing hash')
         time.sleep(1)
-    with open(block_path, 'r') as f:
+    with open(block_path, 'r', encoding='UTF-8') as f:
         print("Load str file from {}".format(block_path))
         logistic_info = json.load(f)
     os.remove(block_path)
@@ -39,7 +42,11 @@ def additem(productNum,productName,productDescription):
     logistic.current_hash = logistic_info['now_hash']
     logistic.random_num = logistic_info['nonce']
     db.session.add(logistic)
-    block_info = 'chain_index: 0\nproduct_id: '+str(product_id)+'\noperator_id: '+'\n'+str(session.get('user_id'))+product_data+'\nprevious_hash: '+logistic_info['previous_hash']+'\ncurrent_hash: '+logistic_info['now_hash']+'\nnonce: '+str(logistic_info['nonce'])
+    # block_info = 'chain_index: 0\nproduct_id: '+str(product_id)+'\noperator_id: '+str(session.get('user_id'))+'\n'+product_data+'\nprevious_hash: '+logistic_info['previous_hash']+'\ncurrent_hash: '+logistic_info['now_hash']+'\nnonce: '+str(logistic_info['nonce'])
+    block_info = '区块编号: 0\n商品ID: ' + str(product_id) + '\n操作者ID: ' + str(
+        session.get('user_id')) + '\n' + product_data + '\n上一区块hash: ' + logistic_info[
+                     'previous_hash'] + '\n当前hash: ' + logistic_info['now_hash'] + '\n随机数: ' + str(
+        logistic_info['nonce'])
     product.block_info = block_info
     db.session.commit()
     return '1'

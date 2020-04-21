@@ -1,7 +1,11 @@
 from flask import Blueprint, render_template, session, redirect, request, url_for, flash
 from flask import jsonify
-from application.models import Product
+from application.models import Product,Logistic
 from application.extension import db
+from application.views.block_publisher import add_block
+import time
+import os.path
+import json
 
 warehouse_page = Blueprint("warehouse_page",__name__)
 
@@ -63,8 +67,36 @@ def commoditiesUpdateInfo(id):
     product.number = product_num
     product.description = product_description
 
-    db.session.commit()
+    # db.session.commit()
     #更新数据库的block_info
+    status_rename = ["0","生产中状态","待运输状态","运输中状态","已到达状态","已入库状态"]
+    chain_index = int(product_status)-1
+    logistic = Logistic(product_status=product_status, product_id=id, product_number=product_num,
+                        operator_id=session.get('user_id'), chain_index=chain_index)
+    product_data = '商品名称: ' + product_name + '\n商品数量: ' + product_num + '\n商品状态: '+status_rename[int(product_status)]+ '\n商品描述: ' +\
+                   product_description + '\n操作时间: ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    pre_logistic = Logistic.query.filter(Logistic.product_id == id,Logistic.chain_index == (chain_index-1)).first()
+    print(pre_logistic)
+    pre_hash = pre_logistic.current_hash
+    add_block(chain_index, product_data, pre_hash)
+    block_path = 'D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock.txt'
+    while not os.path.exists(block_path):
+        print('computing hash')
+        time.sleep(1)
+    with open(block_path, 'r', encoding='UTF-8') as f:
+        print("Load str file from {}".format(block_path))
+        logistic_info = json.load(f)
+    os.remove(block_path)
+    logistic.pre_hash = logistic_info['previous_hash']
+    logistic.current_hash = logistic_info['now_hash']
+    logistic.random_num = logistic_info['nonce']
+    db.session.add(logistic)
+    block_info = '\n\n区块编号: '+str(chain_index)+'\n商品ID: ' + str(id) + '\n操作者ID: '  + str(
+        session.get('user_id')) + '\n'+ product_data + '\n上一区块hash: ' + logistic_info[
+                     'previous_hash'] + '\n当前hash: ' + logistic_info['now_hash'] + '\n随机数: ' + str(
+        logistic_info['nonce'])
+    product.block_info += block_info
+    db.session.commit()
     return "1"
 
 

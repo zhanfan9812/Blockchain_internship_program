@@ -1,6 +1,5 @@
 function makeHtml(data,status){
     var A=["0","生产中","待运输","运输中","已到达","已入库"];
-    alert(A[status])
     var html = "";
           for (var i = 0;i<data.data.length;i++){
              var j = i+1;

@@ -12,23 +12,11 @@ function delete_id(obj, id) {
             }
     });
 }
-
-
-$(function  () {
-    var url = decodeURI(window.location.href);
-    var id = url.split('=')[1]
-
-//console.log(A);
-      $.ajax({
-            url:'/producers/list3',
-            method:'POST',
-            async : false,
-            success:function(response){
-
-                    var html = "";
-                    for (var i = 0 ;i<response.data.length;i++){
-                    var j=i+1;
-                             html+="<tr>" +
+function makeHtml(response,status){
+    var html = "";
+          for (var i = 0;i<response.data.length;i++){
+              var j = i+1;
+              html+="<tr>" +
 									"<td>"+j+"</td>"+
                                         "<td>"+response.data[i].id+"</td>"+
                                         "<td>"+response.data[i].product_name+"</td>"+
@@ -42,11 +30,21 @@ $(function  () {
 									"<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this,"+response.data[i].id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"	+
 									"</td>"+
 								"</tr>";
-                                        }
-                    $('tbody').append(html);
+          }
+          return html;
+}
 
-            }
-        });
+$(function  () {
+    var url = decodeURI(window.location.href);
+    var id = url.split('=')[1]
+    var status = 1;
+    var limit = 5;
+    var count = getCount("/warehouse/getCount",status);//数据总条数
+    alert(count)
+    /*分页注册*/
+    showPage("layuipage",count,limit,"/warehouse/getProductsByPage",status)
+//console.log(A);
+
 
 $('#search').click(function(){
         var name = $('#test').val();

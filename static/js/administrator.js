@@ -23,19 +23,32 @@ function delete_id(obj, id) {
         });
     });
 }
-
+function makeHtml(response,status){
+      var sex=["0","男","女"];
+    var html = "";
+          for (var i = 0;i<response.data.length;i++){
+              var j=i+1;
+                html+= "<tr>" +
+                            "<td>"+j+"</td>"+
+                            "<td>"+response.data[i].id+"</td>"+
+                            "<td>"+response.data[i].username+"</td>"+
+                            "<td>"+response.data[i].email+"</td>"+
+                            "<td>"+sex[response.data[i].gender]+"</td>"+
+                            "<td>"+
+                                "<a class='layui-btn layui-btn-sm layui-btn-normal' title='编辑' onclick='execute_open(\"编辑角色\", \"role_update.html?id="+response.data[i].id+"\", 1000, 500)' href=\"javascript:;\"><i class='layui-icon layui-icon-edit'></i>编辑</a>"	+
+							    "<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this, "+response.data[i].id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"	+
+                            "</td>"+
+                        "</tr>";
+          }
+          return html;
+}
 $(function  () {
-
     var url = decodeURI(window.location.href);
-    //    alert(url)
-    var sex=["0","男","女"];
-
     /* 得到导航栏role*/
     if(url.search(/role_list.html/)!=-1)
     {
         var role = url.split('=')[1]
     }
-
     /* 得到要修改的角色id*/
     if(url.search(/role_update.html/)!=-1)
     {
@@ -45,7 +58,11 @@ $(function  () {
     {
         var update_id = url.split('=')[1]
     }
-
+    var sex=["0","男","女"];
+    var limit = 5;
+    var count = getCount("/role/getCountByRole",role);//数据总条数
+    /*分页注册*/
+    showPage("layuipage",count,limit,"/role/getRoleByRolePage",role)
     /* update by id*/
     $('#update_id').click(function(){
         var username = $('#username_input').val();
@@ -100,30 +117,7 @@ $(function  () {
     })
 
     /* select by role*/
-    $.ajax({
-        url:'/select_role',
-        method:'POST',
-        async : false,
-        data:{role:role},
-        success:function(response){
-            var html = "";
-            for (var i = 0 ;i<response.data.length;i++){
-                var j=i+1
-                html+= "<tr>" +
-                            "<td>"+j+"</td>"+
-                            "<td>"+response.data[i].id+"</td>"+
-                            "<td>"+response.data[i].username+"</td>"+
-                            "<td>"+response.data[i].email+"</td>"+
-                            "<td>"+sex[response.data[i].gender]+"</td>"+
-                            "<td>"+
-                                "<a class='layui-btn layui-btn-sm layui-btn-normal' title='编辑' onclick='execute_open(\"编辑角色\", \"role_update.html?id="+response.data[i].id+"\", 1000, 500)' href=\"javascript:;\"><i class='layui-icon layui-icon-edit'></i>编辑</a>"	+
-							    "<a class='layui-btn layui-btn-sm layui-btn-danger' title='删除' onclick='delete_id(this, "+response.data[i].id+")' href='javascript:;'><i class='layui-icon layui-icon-delete'></i>删除</a>"	+
-                            "</td>"+
-                        "</tr>";
-            }
-            $('tbody').append(html);
-        }
-    });
+
 
     /* select by username*/
     $('#select').click(function(){
@@ -139,7 +133,7 @@ $(function  () {
                 }
                 else{
                     $("tbody").empty();
-//                    alert(response.username);
+//                   alert(response.username);
                     var html= "<tr>" +
                                     "<td>"+1+"</td>"+
                                     "<td>"+response.id+"</td>"+

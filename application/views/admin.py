@@ -10,7 +10,7 @@ def select_username():
     username = request.form.get('username')
     role = request.form.get('role')
     user = User.query.filter(User.username == username,User.role == role).first()
-    if (user == None):
+    if (user is None):
         return '0'
     data = {
         'username' : user.username,
@@ -119,3 +119,26 @@ def getinfo():
         'gender': user.gender
     }
     return jsonify(data)
+
+@admin_page.route("/role/getCountByRole/<role>")
+def getCountByRole(role):
+    role = int(role)
+    count = User.query.filter(User.role==role).count()
+    return str(count)
+
+@admin_page.route("/role/getRoleByRolePage/<role>/<curr>/<limit>")
+def getRoleByRolePage(role,curr,limit):
+    role = int(role)
+    curr = int(curr)
+    limit = int(limit)
+    users = User.query.filter(User.role==role).offset((curr-1)*limit).limit(limit)
+    data = []
+    for user in users:
+        user_dict = {
+            'username': user.username,
+            'id': user.id,
+            'email': user.email,
+            'gender': user.gender
+        }
+        data.append(user_dict)
+    return jsonify({"data": data})

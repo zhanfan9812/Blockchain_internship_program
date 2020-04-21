@@ -1,3 +1,19 @@
+function makeHtml(data,status){
+    var html = "";
+          for (var i = 0;i<data.data.length;i++){
+              var j = i+1;
+              html += "<tr>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>"+j+"</td>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].id+"</td>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].product_name+"</td>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].number+"</td>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>已入库</td>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].date_of_pro+"</td>\n" +
+                  "\t\t\t\t\t\t\t\t\t<td>"+data.data[i].description+"</td>\n" +
+                  "\t\t\t\t\t\t\t\t</tr>"
+          }
+          return html;
+}
 $(function () {
     var status = 5;
     var limit = 5;

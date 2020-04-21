@@ -230,3 +230,31 @@ def select_by_name3():
 #         }
 #         return jsonify({"data": item_dict})
 
+#分页
+@producer_page.route("/products/getCount/<status>")
+def getProdectCount(status):
+#status无用
+   count = Product.query.count()
+   return str(count)
+
+@producer_page.route("/products/getProductsByPage/<status>/<curr>/<limit>")
+def getProductsByPage(status,curr,limit):
+    curr = int(curr)
+    limit = int(limit)
+    products = Product.query.filter(status==status).offset((curr - 1) * limit).limit(limit)
+    if products==None:
+        return render_template('/all_commodities_list.html')
+    # print('all products:',products)
+    data=[]
+    for product in products:
+        print(product.product_name)
+        item_dict = {
+        'id': product.id,
+        'product_name': product.product_name,
+        'number': product.number,
+        'status': product.status,
+        'date': product.date_of_pro,
+        'description': product.description
+        }
+        data.append(item_dict)
+    return jsonify({"data": data})

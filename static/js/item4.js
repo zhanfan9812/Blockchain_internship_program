@@ -1,10 +1,33 @@
+function makeHtml(data,status){
+     var A=["0","生产中","待运输","运输中","已到达","已入库"];
+    var html = "";
+          for (var i = 0;i<data.data.length;i++){
+
+              var j=i+1;
+              html+="<tr>" +
+                  "<td>"+j+"</td>"+
+                  "<td>"+data.data[i].id+"</td>"+
+                  "<td>"+data.data[i].product_name+"</td>"+
+                  "<td>"+data.data[i].number+"</td>"+
+                  "<td>"+A[data.data[i].status]+"</td>"+
+                  "<td>"+data.data[i].date+"</td>"+
+                  "<td>"+data.data[i].description+"</td>"+
+                  "</tr>";
+          }
+          return html;
+}
 $(function  () {
     var url = decodeURI(window.location.href);
     var id = url.split('=')[1]
- var A=["0","生产中","待运输","运输中","已到达","已入库"];
+    var status = 5;
+    var limit = 5;
+    var count = getCount("/products/getCount",status);//数据总条数
+    alert(count)
+    /*分页注册*/
+    showPage("layuipage",count,limit,"/products/getProductsByPage",status)
 
 //console.log(A);
-      $.ajax({
+    /*  $.ajax({
             url:'/producers/list',
             method:'POST',
             async : false,
@@ -26,7 +49,7 @@ $(function  () {
                     $('tbody').append(html);
 
             }
-        });
+        });*/
 
 $('#search').click(function(){
         var name = $('#test').val();

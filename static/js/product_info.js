@@ -22,12 +22,13 @@ $(function () {
                 for (var j = 0 ;j<block_data.length;j++){
                     if(j == 7){
                        createTime = block_data[j].split(":");
-                       TimeData = "" +createTime[1]+createTime[2]+createTime[3];
+                       TimeData = "" +createTime[1]+":"+createTime[2]+":"+createTime[3];
                        html = html + "<td>"+TimeData+"</td>\n" ;
                        continue;
                     }
                     html = html + "<td>"+block_data[j].split(':')[1]+"</td>\n" ;
                 }
+
                 html = html +"</tr>";
             }
              $("tbody").append(html);

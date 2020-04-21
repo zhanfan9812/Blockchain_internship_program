@@ -29,6 +29,7 @@ $(function () {
                     html = html + "<td>"+block_data[j].split(':')[1]+"</td>\n" ;
                 }
                 html = html +"</tr>"
+                $("tbody").append(html);
             }
         }
 

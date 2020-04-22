@@ -26,6 +26,13 @@ $(function () {
                        html = html + "<td>"+TimeData+"</td>\n" ;
                        continue;
                     }
+                    if(j == 8 || j == 9){
+                        Hash = block_data[j].split(":")[1];
+                        Hash1= Hash.substr(0,32);
+                        Hash2 = Hash.substr(33,32)
+                        html = html + "<td>"+Hash1+"\n"+Hash2+"</td>\n" ;
+                        continue;
+                    }
                     html = html + "<td>"+block_data[j].split(':')[1]+"</td>\n" ;
                 }
 

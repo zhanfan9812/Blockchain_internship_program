@@ -56,21 +56,16 @@ def commoditiesGetInfo(id):
 @warehouse_page.route("/warehouse/updateInfo/<id>",methods=["POST"])
 def commoditiesUpdateInfo(id):
     id = request.form.get('id')
-    product_name = request.form.get('product_name')
-    product_num = request.form.get('product_num')
-    product_description = request.form.get('product_description')
+    order_code = request.form.get('order_code')
+    start_place = request.form.get('start_place')
+    end_place = request.form.get('end_place')
     product_status = request.form.get('product_status')
 
-    if (product_name == "")| (product_num == ""):
+    if (order_code == "")| (start_place == "")| (end_place == ""):
         return '0_1'
-    if Product.query.filter(Product.product_name == product_name, Product.id != id).first():
-        return '0_2'
 
     product = Product.query.get(id)
-    product.product_name = product_name
     product.status = product_status
-    product.number = product_num
-    product.description = product_description
 
     # db.session.commit()
     #更新数据库的block_info
@@ -85,10 +80,10 @@ def commoditiesUpdateInfo(id):
             chain_index = log.chain_index
     chain_index += 1
     print(chain_index,pre_logistic)
-    logistic = Logistic(product_status=product_status, product_id=id, product_number=product_num,
+    logistic = Logistic(product_status=product_status, product_id=id, product_number=product.number,
                         operator_id=session.get('user_id'), chain_index=chain_index)
-    product_data = '商品名称: ' + product_name + '\n商品数量: ' + product_num + '\n商品状态: '+status_rename[int(product_status)]+ '\n商品描述: ' +\
-                   product_description + '\n操作时间: ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    product_data = '订单号: ' + order_code + '\n出发地: ' + start_place + '\n商品状态: '+status_rename[int(product_status)]+ '\n目的地: ' + \
+                   end_place + '\n操作时间: ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     # pre_logistic = Logistic.query.filter(Logistic.product_id == id,Logistic.chain_index == (chain_index-1)).first()
     print(pre_logistic)
     pre_hash = pre_logistic.current_hash
@@ -112,14 +107,13 @@ def commoditiesUpdateInfo(id):
     product.block_info += block_info
     #生成二维码
     qr = qrcode.QRCode(
-        version=1,
+        version=5,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=2,
-        border=1,
+        border=4,
     )
     qr.make(fit=True)
     qr.add_data(product.block_info)
-    # print('qr_code的txt: ',block_info)
     img = qr.make_image()
 
     buf = io.BytesIO()

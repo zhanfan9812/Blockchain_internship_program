@@ -13,7 +13,7 @@ function makeHtml(data,status){
                   "<td>"+data.data[i].date+"</td>"+
                   "<td>"+data.data[i].description+"</td>"+
                   "\t\t\t\t\t\t\t\t\t<td>\n" +
-                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('商品详情', 'product_info.html?id="+data.data[i].id+"', 1330, 630)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>商品详情</a>\n" +
+                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('商品详情', 'product_info.html?id="+data.data[i].id+"', 1340, 650)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>商品详情</a>\n" +
                    "\t\t\t\t\t\t\t\t\t</td>\n" +
                   "</tr>";
           }
@@ -80,7 +80,7 @@ $('#search').click(function(){
                                     "<td>"+response.data.date+"</td>"+
                                     "<td>"+response.data.description+"</td>"+
                                     "\t\t\t\t\t\t\t\t\t<td>\n" +
-                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('商品详情', 'product_info.html?id="+response.data.id+"', 1200, 600)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>商品详情</a>\n" +
+                  "\t\t\t\t\t\t\t\t\t\t<a class=\"layui-btn layui-btn-sm layui-btn-normal\" title=\"编辑\" onclick=\"execute_open('商品详情', 'product_info.html?id="+response.data.id+"', 1340, 650)\" href=\"javascript:;\"><i class=\"layui-icon layui-icon-edit\"></i>商品详情</a>\n" +
                    "\t\t\t\t\t\t\t\t\t</td>\n" +
                              "</tr>";
                     $('tbody').append(html);

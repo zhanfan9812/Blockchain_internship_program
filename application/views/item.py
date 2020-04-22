@@ -31,7 +31,7 @@ def additem(productNum,productName,productDescription):
     product_id = product.id
     logistic = Logistic(product_status=1, product_id= product_id,product_number=productNum,operator_id=session.get('user_id'),chain_index=0)
     # product_data = 'product_name: '+productName+'\nproduct_number: '+productNum+'\nproduct_status: 1'+'\nproduct_description: '+productDescription+'\nupdate_time: '+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-    product_data = '商品名称: ' + productName + '\n商品数量: ' + productNum + '\n商品状态: 生产中状态' + '\n商品描述: ' + productDescription + '\n操作时间: ' + time.strftime(
+    product_data = '订单号: 000\n出发地: 原料厂\n商品状态: 生产中状态' + '\n目的地: 生产商\n操作时间: ' + time.strftime(
         '%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     # print(product_data)
     add_block(0, product_data, '0')
@@ -55,10 +55,10 @@ def additem(productNum,productName,productDescription):
     product.block_info = block_info
     # 生成二维码
     qr = qrcode.QRCode(
-        version=1,
+        version=5,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=2,
-        border=1,
+        border=4,
     )
     qr.make(fit=True)
     qr.add_data(block_info)

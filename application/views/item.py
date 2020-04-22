@@ -11,6 +11,8 @@ import qrcode
 
 producer_page = Blueprint('producer_page', __name__)
 
+_basepath = os.path.abspath(os.path.dirname(__file__))
+
 @producer_page.route('/producers/additem/<productNum>/<productName>/<productDescription>', methods=["POST"])
 def additem(productNum,productName,productDescription):
     numFlag=productNum.isdigit()
@@ -33,7 +35,7 @@ def additem(productNum,productName,productDescription):
         '%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     # print(product_data)
     add_block(0, product_data, '0')
-    block_path='D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock.txt'
+    block_path=_basepath + '\\pubBlock.txt'
     while not os.path.exists(block_path):
         print('waiting reply')
         time.sleep(1)

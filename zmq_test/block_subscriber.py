@@ -7,7 +7,7 @@ import time
 
 _basepath = os.path.abspath(os.path.dirname(__file__))
 conf = {}
-conf['server'] = '192.168.1.4'          #server ip
+conf['server'] = '192.168.1.3'          #server ip
 conf['port'] = '5555'                   #new port
 conf['signal_port'] = '5556'            #request port
 conf['write_port'] = '5557'             #write_port

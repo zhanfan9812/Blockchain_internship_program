@@ -12,6 +12,8 @@ import qrcode
 
 warehouse_page = Blueprint("warehouse_page",__name__)
 
+_basepath = os.path.abspath(os.path.dirname(__file__))
+
 @warehouse_page.route("/getArriveCommList/<status>")
 def getArriveCommList(status):
     #status = request.form.get("status")
@@ -91,7 +93,7 @@ def commoditiesUpdateInfo(id):
     print(pre_logistic)
     pre_hash = pre_logistic.current_hash
     add_block(chain_index, product_data, pre_hash)
-    block_path = 'D:\\Github\\Blockchain_internship_program\\application\\views\pubBlock.txt'
+    block_path = _basepath + '\\pubBlock.txt'
     while not os.path.exists(block_path):
         print('waiting reply')
         time.sleep(1)

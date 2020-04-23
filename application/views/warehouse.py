@@ -107,12 +107,12 @@ def commoditiesUpdateInfo(id):
     product.block_info += block_info
     #生成二维码
     qr = qrcode.QRCode(
-        version=5,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=2,
-        border=4,
+        version=7,                                                  #二维码大小
+        error_correction=qrcode.constants.ERROR_CORRECT_L,          #二维码纠错
+        box_size=2,                                                 #每个小格子包含的像素数
+        border=4,                                                   #二维码与图片边界的距离
     )
-    qr.make(fit=True)
+    # qr.make(fit=True)
     qr.add_data(product.block_info)
     img = qr.make_image()
 

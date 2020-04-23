@@ -55,12 +55,12 @@ def additem(productNum,productName,productDescription):
     product.block_info = block_info
     # 生成二维码
     qr = qrcode.QRCode(
-        version=5,
+        version=7,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=2,
         border=4,
     )
-    qr.make(fit=True)
+    # qr.make(fit=True)
     qr.add_data(block_info)
     img = qr.make_image()
 
